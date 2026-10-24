@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Urlaubsrechner Polen 2026 — Urlaubsanspruch und Urlaubsabgeltung</title>
+<meta name="description" content="Wie viele Urlaubstage Ihnen in Polen zustehen (20 oder 26 Tage, anteilig) und wie hoch die Abgeltung für Resturlaub 2026 ist (Koeffizient 20,92).">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css?v=6">
+<script src="../assets/site.js?v=6" defer></script>
+<script src="../assets/partners.js?v=6" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://mojekalkulatory.pl/de/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="pl" href="https://mojekalkulatory.pl/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="en" href="https://mojekalkulatory.pl/en/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="uk" href="https://mojekalkulatory.pl/uk/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="ru" href="https://mojekalkulatory.pl/ru/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="de" href="https://mojekalkulatory.pl/de/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="x-default" href="https://mojekalkulatory.pl/kalkulator-urlopu.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Zinseszins</a><a href="kalkulator-kredytu.html">Kredit</a><a href="nadplata-kredytu.html">Sondertilgung</a><a href="lokata.html">Festgeld</a><a href="obligacje-skarbowe.html">Staatsanleihen</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Passives Einkommen</a><a href="kalkulator-wynagrodzen.html">Gehalt</a><a href="kalkulator-l4.html">Krankengeld (L4)</a><a href="kalkulator-urlopu.html">Urlaub</a><a href="kalkulator-b2b.html">B2B / JDG</a></nav>
+<!--i18n--><div class="lang"><a href="../kalkulator-urlopu.html" hreflang="pl">PL</a><a href="../en/kalkulator-urlopu.html" hreflang="en">EN</a><a href="../uk/kalkulator-urlopu.html" hreflang="uk">UA</a><a href="../ru/kalkulator-urlopu.html" hreflang="ru">RU</a><a href="../de/kalkulator-urlopu.html" hreflang="de" aria-current="true">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Urlaubs- und Urlaubsabgeltungsrechner</h1>
+<div class="card grid">
+<label>Beschäftigungsdauer (inkl. Ausbildung)<select id="s"><option value="20">Unter 10 Jahren — 20 Tage</option><option value="26">10 Jahre und mehr — 26 Tage</option></select></label>
+<label>Arbeitszeit<select id="e"><option value="1">Vollzeit</option><option value="0.75">3/4-Stelle</option><option value="0.5">1/2-Stelle</option><option value="0.25">1/4-Stelle</option></select></label>
+<label>Monate beim Arbeitgeber in diesem Jahr<input id="m" type="number" value="12" min="1" max="12"></label>
+<label>Bereits genommene Urlaubstage<input id="u" type="number" value="5"></label>
+<label>Bruttogehalt (fest), PLN / Monat<input id="b" type="number" value="8000"></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="lokata"></div>
+<h2>Wie viele Urlaubstage Ihnen zustehen</h2>
+<p>In Polen stehen Arbeitnehmern mit weniger als 10 Jahren Beschäftigung 20 Urlaubstage pro Jahr zu, ab 10 Jahren 26 Tage. Die Ausbildung zählt mit, z. B. ein allgemeinbildender Oberschulabschluss als 4 Jahre und ein Hochschulabschluss als 8 Jahre. In Teilzeit ist der Anspruch anteilig geringer, ein angefangener Tag wird aufgerundet.</p>
+<p>Wenn Sie im Laufe des Jahres anfangen oder aufhören, steht Ihnen anteiliger Urlaub zu: 1/12 des Jahresanspruchs pro gearbeitetem Monat, ebenfalls auf volle Tage aufgerundet.</p>
+<h2>Abgeltung für nicht genommenen Urlaub (ekwiwalent)</h2>
+<p>Endet der Vertrag und ist Urlaub übrig, zahlt der Arbeitgeber eine Abgeltung. Bei festem Gehalt wird das Monatsgehalt durch den Urlaubskoeffizienten geteilt — 2026 beträgt er 20,92 bei Vollzeit (bei Teilzeit anteilig weniger) — und mit der Zahl der Resttage multipliziert. Die Abgeltung wird wie normales Gehalt versteuert und verbeitragt.</p>
+<p>Bei festem Gehalt erhalten Sie im Urlaub Ihr normales Gehalt. Variable Bestandteile (Prämien, Überstunden) werden aus dem Durchschnitt der letzten 3 Monate berechnet — dieser Rechner berücksichtigt sie nicht.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["s","e","m","u","b"],()=>{
+  const S=num("s"),E=num("e"),M=Math.min(12,Math.max(1,Math.round(num("m")))),U=Math.max(0,num("u")),B=num("b");
+  const year=Math.ceil(S*E),days=Math.ceil(year*M/12),left=Math.max(0,days-U);
+  const coef=20.92*E,perDay=B/coef,eq=perDay*left;
+  out.innerHTML=`Ihnen stehen zu: <b>${days} Tage</b> Urlaub · übrig ${left}<br>Abgeltung für ${left} Tage: <b>${fmt(eq)}</b> brutto`;
+  tbl.innerHTML=[["Jahresurlaubsanspruch (Tage)",year],["Urlaub für "+M+" Monate (Tage)",days],["Resturlaubstage",left],["Urlaubskoeffizient 2026",coef.toFixed(2).replace(".",",")],["Abgeltung pro Tag",fmt(perDay)],["Abgeltung gesamt (brutto)",fmt(eq)]].map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Die Berechnungen dienen nur zur Orientierung und sind keine Finanz- oder Anlageberatung. Berechnet nach polnischen Regeln in Złoty (PLN). Diese Seite enthält Partnerlinks. © FinKalk · <a href="polityka-prywatnosci.html">Datenschutz</a> · <a href="kontakt.html">Kontakt</a></footer>
+</body>
+</html>

@@ -20,7 +20,7 @@ LANGS = ["pl", "en", "uk", "ru", "de"]
 LABEL = {"pl": "PL", "en": "EN", "uk": "UA", "ru": "RU", "de": "DE"}
 POLISH_CHARS = re.compile(r"[ąćęłńśźżĄĆĘŁŃŚŹŻ]")
 # Polskie słowa, które celowo zostają w tłumaczeniach (nazwy własne, waluta).
-KEEP = ["zł", "Złoty", "Umowa o pracę", "Pekao", "Żubrem", "Bezcenne", "Skarbu Państwa", "umowa o pracę", "umowie o pracę",
+KEEP = ["zł", "wynagrodzenie chorobowe", "zasiłek chorobowy", "Złoty", "Umowa o pracę", "Pekao", "Żubrem", "Bezcenne", "Skarbu Państwa", "umowa o pracę", "umowie o pracę",
         "działalność", "ryczałt", "Ryczałt", "ulga na start", "podatek Belki", "Belki", "składka zdrowotna",
         "obligacjeskarbowe.pl", "zus.pl", "nadpłata", "Nadpłata", "lokata", "Procent składany"]
 

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kalkulator urlopu 2026 — wymiar urlopu i ekwiwalent</title>
+<meta name="description" content="Oblicz, ile dni urlopu wypoczynkowego Ci przysługuje (20 lub 26 dni, urlop proporcjonalny) i ile wyniesie ekwiwalent za niewykorzystany urlop w 2026 (współczynnik 20,92).">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css?v=6">
+<script src="assets/site.js?v=6" defer></script>
+<script src="assets/partners.js?v=6" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://mojekalkulatory.pl/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="pl" href="https://mojekalkulatory.pl/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="en" href="https://mojekalkulatory.pl/en/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="uk" href="https://mojekalkulatory.pl/uk/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="ru" href="https://mojekalkulatory.pl/ru/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="de" href="https://mojekalkulatory.pl/de/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="x-default" href="https://mojekalkulatory.pl/kalkulator-urlopu.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Procent składany</a><a href="kalkulator-kredytu.html">Kredyt</a><a href="nadplata-kredytu.html">Nadpłata kredytu</a><a href="lokata.html">Lokata</a><a href="obligacje-skarbowe.html">Obligacje</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Dochód pasywny</a><a href="kalkulator-wynagrodzen.html">Wynagrodzenie</a><a href="kalkulator-l4.html">L4</a><a href="kalkulator-urlopu.html">Urlop</a><a href="kalkulator-b2b.html">B2B / JDG</a></nav>
+<!--i18n--><div class="lang"><a href="kalkulator-urlopu.html" hreflang="pl" aria-current="true">PL</a><a href="en/kalkulator-urlopu.html" hreflang="en">EN</a><a href="uk/kalkulator-urlopu.html" hreflang="uk">UA</a><a href="ru/kalkulator-urlopu.html" hreflang="ru">RU</a><a href="de/kalkulator-urlopu.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Kalkulator urlopu i ekwiwalentu za urlop</h1>
+<div class="card grid">
+<label>Staż pracy (z okresem nauki)<select id="s"><option value="20">Poniżej 10 lat — 20 dni</option><option value="26">10 lat i więcej — 26 dni</option></select></label>
+<label>Wymiar etatu<select id="e"><option value="1">Pełny etat</option><option value="0.75">3/4 etatu</option><option value="0.5">1/2 etatu</option><option value="0.25">1/4 etatu</option></select></label>
+<label>Miesiące pracy w tym roku u pracodawcy<input id="m" type="number" value="12" min="1" max="12"></label>
+<label>Wykorzystane dni urlopu<input id="u" type="number" value="5"></label>
+<label>Wynagrodzenie brutto (stałe), zł / mies.<input id="b" type="number" value="8000"></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="lokata"></div>
+<h2>Ile dni urlopu przysługuje</h2>
+<p>Pracownikowi ze stażem poniżej 10 lat przysługuje 20 dni urlopu rocznie, a od 10 lat — 26 dni. Do stażu wlicza się okres nauki, np. ukończona szkoła średnia ogólnokształcąca to 4 lata, a studia wyższe — 8 lat. Na części etatu wymiar jest proporcjonalnie niższy, a niepełny dzień zaokrągla się w górę.</p>
+<p>Jeśli zaczynasz lub kończysz pracę w trakcie roku, przysługuje Ci urlop proporcjonalny: 1/12 rocznego wymiaru za każdy przepracowany miesiąc, również zaokrąglony w górę do pełnego dnia.</p>
+<h2>Ekwiwalent za niewykorzystany urlop</h2>
+<p>Gdy umowa się kończy, a urlop nie został wykorzystany, pracodawca wypłaca ekwiwalent. Przy stałej pensji miesięczne wynagrodzenie dzieli się przez współczynnik urlopowy — w 2026 r. wynosi on 20,92 dla pełnego etatu (dla części etatu proporcjonalnie mniej) — i mnoży przez liczbę niewykorzystanych dni. Ekwiwalent jest opodatkowany i oskładkowany jak zwykłe wynagrodzenie.</p>
+<p>W trakcie urlopu przy stałej pensji dostajesz normalne wynagrodzenie. Zmienne składniki (premie, nadgodziny) liczy się ze średniej z ostatnich 3 miesięcy — tego kalkulator nie uwzględnia.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["s","e","m","u","b"],()=>{
+  const S=num("s"),E=num("e"),M=Math.min(12,Math.max(1,Math.round(num("m")))),U=Math.max(0,num("u")),B=num("b");
+  const year=Math.ceil(S*E),days=Math.ceil(year*M/12),left=Math.max(0,days-U);
+  const coef=20.92*E,perDay=B/coef,eq=perDay*left;
+  out.innerHTML=`Przysługuje Ci: <b>${days} dni</b> urlopu · zostało ${left}<br>Ekwiwalent za ${left} dni: <b>${fmt(eq)}</b> brutto`;
+  tbl.innerHTML=[["Roczny wymiar urlopu (dni)",year],["Urlop za "+M+" mies. (dni)",days],["Niewykorzystane dni",left],["Współczynnik urlopowy 2026",coef.toFixed(2).replace(".",",")],["Ekwiwalent za 1 dzień",fmt(perDay)],["Ekwiwalent razem (brutto)",fmt(eq)]].map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Obliczenia mają charakter poglądowy i nie stanowią porady finansowej ani rekomendacji inwestycyjnej. Strona zawiera linki partnerskie. © FinKalk · <a href="polityka-prywatnosci.html">Polityka prywatności</a> · <a href="kontakt.html">Kontakt</a></footer>
+</body>
+</html>

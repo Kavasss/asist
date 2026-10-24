@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Калькулятор больничного L4 2026 — сколько получу на больничном в Польше</title>
+<meta name="description" content="Рассчитайте больничные и пособие по болезни на L4 в Польше в 2026: 80%, 70% или 100% базы. Узнайте, сколько потеряете по сравнению с зарплатой.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css?v=6">
+<script src="../assets/site.js?v=6" defer></script>
+<script src="../assets/partners.js?v=6" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://mojekalkulatory.pl/ru/kalkulator-l4.html">
+<link rel="alternate" hreflang="pl" href="https://mojekalkulatory.pl/kalkulator-l4.html">
+<link rel="alternate" hreflang="en" href="https://mojekalkulatory.pl/en/kalkulator-l4.html">
+<link rel="alternate" hreflang="uk" href="https://mojekalkulatory.pl/uk/kalkulator-l4.html">
+<link rel="alternate" hreflang="ru" href="https://mojekalkulatory.pl/ru/kalkulator-l4.html">
+<link rel="alternate" hreflang="de" href="https://mojekalkulatory.pl/de/kalkulator-l4.html">
+<link rel="alternate" hreflang="x-default" href="https://mojekalkulatory.pl/kalkulator-l4.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Сложный процент</a><a href="kalkulator-kredytu.html">Кредит</a><a href="nadplata-kredytu.html">Досрочное погашение</a><a href="lokata.html">Вклад</a><a href="obligacje-skarbowe.html">Облигации</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Пассивный доход</a><a href="kalkulator-wynagrodzen.html">Зарплата</a><a href="kalkulator-l4.html">Больничный L4</a><a href="kalkulator-urlopu.html">Отпуск</a><a href="kalkulator-b2b.html">B2B / ИП</a></nav>
+<!--i18n--><div class="lang"><a href="../kalkulator-l4.html" hreflang="pl">PL</a><a href="../en/kalkulator-l4.html" hreflang="en">EN</a><a href="../uk/kalkulator-l4.html" hreflang="uk">UA</a><a href="../ru/kalkulator-l4.html" hreflang="ru" aria-current="true">RU</a><a href="../de/kalkulator-l4.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Калькулятор больничного L4 — сколько вы получите</h1>
+<div class="card grid">
+<label>Средняя зарплата брутто за 12 мес., zł<input id="b" type="number" value="8000"></label>
+<label>Количество дней на L4<input id="d" type="number" value="10"></label>
+<label>Вид больничного<select id="p"><option value="0.8">Обычная болезнь — 80%</option><option value="0.7">Пребывание в больнице — 70%</option><option value="1">Беременность, несчастный случай по пути на/с работы — 100%</option></select></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="lokata"></div>
+<h2>Как считаются больничные</h2>
+<p>Базой является средняя зарплата брутто за последние 12 месяцев минус 13,71% (пенсионный, по инвалидности и больничный взносы работника). Дневная ставка — 1/30 этой суммы, умноженная на 80%, или 70% за пребывание в больнице и 100% во время беременности или после несчастного случая по пути на работу или с работы.</p>
+<p>Первые 33 дня болезни в году (14 дней, если вам 50 или больше) оплачивает работодатель — это wynagrodzenie chorobowe. Со следующего дня пособие по болезни (zasiłek chorobowy) выплачивает ZUS. Сумма одинаковая. С больничных не платятся взносы ZUS и медицинский взнос, удерживается только аванс PIT.</p>
+<h2>Что изменилось в 2026 году</h2>
+<p>С 13 апреля 2026 г. действуют новые правила контроля больничных и уточнённые причины потери пособия: оплачиваемая работа и деятельность, не соответствующая цели больничного. Эпизодические действия, например ответ на e-mail, не должны лишать права на пособие. Ставки 80% / 70% / 100% не изменились.</p>
+<p>Результат нетто приблизительный: из суммы брутто вычитаем 12% налога. Точную сумму рассчитает работодатель или ZUS — например, если в базу входят премии или вы работаете меньше 12 месяцев.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["b","d","p"],()=>{
+  const B=num("b"),D=Math.max(0,Math.round(num("d"))),P=num("p");
+  const base=B*(1-0.1371),daily=base/30*P,gross=daily*D,net=gross*0.88;
+  const zus=B*0.1371,zdr=(B-zus)*0.09,normal=(B-zus-zdr-Math.max(0,Math.round((B-zus-250)*0.12-300)))*D/30;
+  out.innerHTML=`За ${D} дн. L4: <b>${fmt(net)}</b> нетто (прибл.)<br>Брутто: ${fmt(gross)} · Теряете прибл. ${fmt(Math.max(0,normal-net))} по сравнению с зарплатой`;
+  tbl.innerHTML=[["База (брутто − 13,71%)",base],["Дневная ставка",daily],["Больничные брутто",gross],["Больничные нетто (прибл.)",net],["Зарплата нетто за эти дни без L4 (прибл.)",normal]].map(x=>`<tr><td>${x[0]}</td><td>${fmt(x[1])}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Расчёты носят ознакомительный характер и не являются финансовой консультацией или инвестиционной рекомендацией. Расчёты по польским правилам, в злотых (PLN). Сайт содержит партнёрские ссылки. © FinKalk · <a href="polityka-prywatnosci.html">Политика конфиденциальности</a> · <a href="kontakt.html">Контакты</a></footer>
+</body>
+</html>

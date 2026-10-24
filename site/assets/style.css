@@ -161,3 +161,7 @@ header nav{order:3;width:100%}
 /* szerokie tabele przewijają się w karcie zamiast poszerzać stronę na telefonie */
 .card:has(>table){overflow-x:auto}
 @media (max-width:600px){table{font-size:.8rem}td,th{padding:6px 4px}}
+/* lista linków w nagłówku nie może poszerzać strony na telefonie */
+header{overflow-x:clip}
+/* długie słowa (np. niemieckie) w nagłówkach łamią się zamiast poszerzać stronę */
+h1,h2{overflow-wrap:break-word;hyphens:auto}

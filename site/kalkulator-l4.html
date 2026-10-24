@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kalkulator L4 2026 — ile dostanę na zwolnieniu lekarskim</title>
+<meta name="description" content="Oblicz wynagrodzenie chorobowe i zasiłek chorobowy na L4 w 2026: 80%, 70% lub 100% podstawy. Sprawdź, ile stracisz w porównaniu z pensją.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/style.css?v=6">
+<script src="assets/site.js?v=6" defer></script>
+<script src="assets/partners.js?v=6" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://mojekalkulatory.pl/kalkulator-l4.html">
+<link rel="alternate" hreflang="pl" href="https://mojekalkulatory.pl/kalkulator-l4.html">
+<link rel="alternate" hreflang="en" href="https://mojekalkulatory.pl/en/kalkulator-l4.html">
+<link rel="alternate" hreflang="uk" href="https://mojekalkulatory.pl/uk/kalkulator-l4.html">
+<link rel="alternate" hreflang="ru" href="https://mojekalkulatory.pl/ru/kalkulator-l4.html">
+<link rel="alternate" hreflang="de" href="https://mojekalkulatory.pl/de/kalkulator-l4.html">
+<link rel="alternate" hreflang="x-default" href="https://mojekalkulatory.pl/kalkulator-l4.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Procent składany</a><a href="kalkulator-kredytu.html">Kredyt</a><a href="nadplata-kredytu.html">Nadpłata kredytu</a><a href="lokata.html">Lokata</a><a href="obligacje-skarbowe.html">Obligacje</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Dochód pasywny</a><a href="kalkulator-wynagrodzen.html">Wynagrodzenie</a><a href="kalkulator-l4.html">L4</a><a href="kalkulator-urlopu.html">Urlop</a><a href="kalkulator-b2b.html">B2B / JDG</a></nav>
+<!--i18n--><div class="lang"><a href="kalkulator-l4.html" hreflang="pl" aria-current="true">PL</a><a href="en/kalkulator-l4.html" hreflang="en">EN</a><a href="uk/kalkulator-l4.html" hreflang="uk">UA</a><a href="ru/kalkulator-l4.html" hreflang="ru">RU</a><a href="de/kalkulator-l4.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Kalkulator L4 — ile dostaniesz na zwolnieniu</h1>
+<div class="card grid">
+<label>Średnie wynagrodzenie brutto z 12 mies., zł<input id="b" type="number" value="8000"></label>
+<label>Liczba dni na L4<input id="d" type="number" value="10"></label>
+<label>Rodzaj zwolnienia<select id="p"><option value="0.8">Zwykła choroba — 80%</option><option value="0.7">Pobyt w szpitalu — 70%</option><option value="1">Ciąża, wypadek w drodze do/z pracy — 100%</option></select></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="lokata"></div>
+<h2>Jak liczy się chorobowe</h2>
+<p>Podstawą jest przeciętne wynagrodzenie brutto z ostatnich 12 miesięcy pomniejszone o 13,71% (składki emerytalna, rentowa i chorobowa płacone przez pracownika). Dzienna stawka to 1/30 tej kwoty pomnożona przez 80% — albo 70% za pobyt w szpitalu i 100% w ciąży lub po wypadku w drodze do pracy albo z pracy.</p>
+<p>Przez pierwsze 33 dni choroby w roku (14 dni, jeśli masz ukończone 50 lat) płaci pracodawca — to wynagrodzenie chorobowe. Od kolejnego dnia zasiłek chorobowy wypłaca ZUS. Wysokość jest taka sama. Od chorobowego nie płaci się składek ZUS ani składki zdrowotnej, pobierana jest tylko zaliczka na PIT.</p>
+<h2>Co się zmieniło w 2026 roku</h2>
+<p>Od 13 kwietnia 2026 r. obowiązują nowe zasady kontroli zwolnień lekarskich i doprecyzowane przyczyny utraty zasiłku: praca zarobkowa i aktywność niezgodna z celem zwolnienia. Sporadyczne czynności, np. odpisanie na e-mail, nie powinny pozbawiać prawa do zasiłku. Stawki 80% / 70% / 100% się nie zmieniły.</p>
+<p>Wynik netto jest przybliżony: od kwoty brutto odejmujemy 12% podatku. Dokładną kwotę wyliczy pracodawca lub ZUS — np. gdy w podstawie są premie lub byłeś zatrudniony krócej niż 12 miesięcy.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["b","d","p"],()=>{
+  const B=num("b"),D=Math.max(0,Math.round(num("d"))),P=num("p");
+  const base=B*(1-0.1371),daily=base/30*P,gross=daily*D,net=gross*0.88;
+  const zus=B*0.1371,zdr=(B-zus)*0.09,normal=(B-zus-zdr-Math.max(0,Math.round((B-zus-250)*0.12-300)))*D/30;
+  out.innerHTML=`Za ${D} dni L4: <b>${fmt(net)}</b> netto (ok.)<br>Brutto: ${fmt(gross)} · Tracisz ok. ${fmt(Math.max(0,normal-net))} w porównaniu z pensją`;
+  tbl.innerHTML=[["Podstawa wymiaru (brutto − 13,71%)",base],["Stawka dzienna",daily],["Chorobowe brutto",gross],["Chorobowe netto (ok.)",net],["Pensja netto za te dni bez L4 (ok.)",normal]].map(x=>`<tr><td>${x[0]}</td><td>${fmt(x[1])}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Obliczenia mają charakter poglądowy i nie stanowią porady finansowej ani rekomendacji inwestycyjnej. Strona zawiera linki partnerskie. © FinKalk · <a href="polityka-prywatnosci.html">Polityka prywatności</a> · <a href="kontakt.html">Kontakt</a></footer>
+</body>
+</html>

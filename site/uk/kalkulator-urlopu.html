@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Калькулятор відпустки в Польщі 2026 — кількість днів і компенсація</title>
+<meta name="description" content="Дізнайтеся, скільки днів відпустки вам належить у Польщі (20 або 26 днів, пропорційно) і яка компенсація за невикористану відпустку у 2026 (коефіцієнт 20,92).">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css?v=6">
+<script src="../assets/site.js?v=6" defer></script>
+<script src="../assets/partners.js?v=6" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://mojekalkulatory.pl/uk/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="pl" href="https://mojekalkulatory.pl/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="en" href="https://mojekalkulatory.pl/en/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="uk" href="https://mojekalkulatory.pl/uk/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="ru" href="https://mojekalkulatory.pl/ru/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="de" href="https://mojekalkulatory.pl/de/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="x-default" href="https://mojekalkulatory.pl/kalkulator-urlopu.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Складні відсотки</a><a href="kalkulator-kredytu.html">Кредит</a><a href="nadplata-kredytu.html">Переплата кредиту</a><a href="lokata.html">Депозит</a><a href="obligacje-skarbowe.html">Облігації</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Пасивний дохід</a><a href="kalkulator-wynagrodzen.html">Зарплата</a><a href="kalkulator-l4.html">Лікарняний L4</a><a href="kalkulator-urlopu.html">Відпустка</a><a href="kalkulator-b2b.html">B2B / ФОП</a></nav>
+<!--i18n--><div class="lang"><a href="../kalkulator-urlopu.html" hreflang="pl">PL</a><a href="../en/kalkulator-urlopu.html" hreflang="en">EN</a><a href="../uk/kalkulator-urlopu.html" hreflang="uk" aria-current="true">UA</a><a href="../ru/kalkulator-urlopu.html" hreflang="ru">RU</a><a href="../de/kalkulator-urlopu.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Калькулятор відпустки та компенсації за відпустку</h1>
+<div class="card grid">
+<label>Стаж роботи (з навчанням)<select id="s"><option value="20">Менше 10 років — 20 днів</option><option value="26">10 років і більше — 26 днів</option></select></label>
+<label>Розмір ставки<select id="e"><option value="1">Повна ставка</option><option value="0.75">3/4 ставки</option><option value="0.5">1/2 ставки</option><option value="0.25">1/4 ставки</option></select></label>
+<label>Місяців роботи цього року в роботодавця<input id="m" type="number" value="12" min="1" max="12"></label>
+<label>Використано днів відпустки<input id="u" type="number" value="5"></label>
+<label>Зарплата брутто (фіксована), zł / міс.<input id="b" type="number" value="8000"></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="lokata"></div>
+<h2>Скільки днів відпустки належить</h2>
+<p>У Польщі працівнику зі стажем менше 10 років належить 20 днів відпустки на рік, а від 10 років — 26 днів. До стажу зараховується навчання, наприклад закінчена загальноосвітня середня школа — 4 роки, вища освіта — 8 років. На неповній ставці кількість днів пропорційно менша, неповний день округлюється вгору.</p>
+<p>Якщо ви починаєте або закінчуєте роботу протягом року, вам належить пропорційна відпустка: 1/12 річної норми за кожен відпрацьований місяць, також округлена вгору до повного дня.</p>
+<h2>Компенсація за невикористану відпустку (ekwiwalent)</h2>
+<p>Коли договір закінчується, а відпустку не використано, роботодавець виплачує компенсацію. При фіксованій зарплаті місячну суму ділять на коефіцієнт відпустки — у 2026 р. він становить 20,92 для повної ставки (для неповної пропорційно менше) — і множать на кількість невикористаних днів. Компенсація оподатковується та обкладається внесками як звичайна зарплата.</p>
+<p>Під час відпустки при фіксованій зарплаті ви отримуєте звичайну зарплату. Змінні складові (премії, понаднормові) рахуються із середнього за останні 3 місяці — цей калькулятор їх не враховує.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["s","e","m","u","b"],()=>{
+  const S=num("s"),E=num("e"),M=Math.min(12,Math.max(1,Math.round(num("m")))),U=Math.max(0,num("u")),B=num("b");
+  const year=Math.ceil(S*E),days=Math.ceil(year*M/12),left=Math.max(0,days-U);
+  const coef=20.92*E,perDay=B/coef,eq=perDay*left;
+  out.innerHTML=`Вам належить: <b>${days} дн.</b> відпустки · залишилось ${left}<br>Компенсація за ${left} дн.: <b>${fmt(eq)}</b> брутто`;
+  tbl.innerHTML=[["Річна норма відпустки (днів)",year],["Відпустка за "+M+" міс. (днів)",days],["Невикористані дні",left],["Коефіцієнт відпустки 2026",coef.toFixed(2).replace(".",",")],["Компенсація за 1 день",fmt(perDay)],["Компенсація разом (брутто)",fmt(eq)]].map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Розрахунки мають ознайомчий характер і не є фінансовою порадою чи інвестиційною рекомендацією. Розрахунки за польськими правилами, у злотих (PLN). Сайт містить партнерські посилання. © FinKalk · <a href="polityka-prywatnosci.html">Політика конфіденційності</a> · <a href="kontakt.html">Контакти</a></footer>
+</body>
+</html>

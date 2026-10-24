@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Holiday Leave Calculator Poland 2026 — Entitlement and Payout for Unused Leave</title>
+<meta name="description" content="Find out how many days of annual leave you are entitled to in Poland (20 or 26 days, pro rata) and your payout for unused leave in 2026 (coefficient 20.92).">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css?v=6">
+<script src="../assets/site.js?v=6" defer></script>
+<script src="../assets/partners.js?v=6" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://mojekalkulatory.pl/en/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="pl" href="https://mojekalkulatory.pl/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="en" href="https://mojekalkulatory.pl/en/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="uk" href="https://mojekalkulatory.pl/uk/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="ru" href="https://mojekalkulatory.pl/ru/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="de" href="https://mojekalkulatory.pl/de/kalkulator-urlopu.html">
+<link rel="alternate" hreflang="x-default" href="https://mojekalkulatory.pl/kalkulator-urlopu.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Compound interest</a><a href="kalkulator-kredytu.html">Loan</a><a href="nadplata-kredytu.html">Loan overpayment</a><a href="lokata.html">Deposit</a><a href="obligacje-skarbowe.html">Bonds</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Passive income</a><a href="kalkulator-wynagrodzen.html">Salary</a><a href="kalkulator-l4.html">Sick leave (L4)</a><a href="kalkulator-urlopu.html">Holiday leave</a><a href="kalkulator-b2b.html">B2B / JDG</a></nav>
+<!--i18n--><div class="lang"><a href="../kalkulator-urlopu.html" hreflang="pl">PL</a><a href="../en/kalkulator-urlopu.html" hreflang="en" aria-current="true">EN</a><a href="../uk/kalkulator-urlopu.html" hreflang="uk">UA</a><a href="../ru/kalkulator-urlopu.html" hreflang="ru">RU</a><a href="../de/kalkulator-urlopu.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Holiday leave and unused leave payout calculator</h1>
+<div class="card grid">
+<label>Length of service (incl. education)<select id="s"><option value="20">Under 10 years — 20 days</option><option value="26">10 years or more — 26 days</option></select></label>
+<label>Working time<select id="e"><option value="1">Full time</option><option value="0.75">3/4 time</option><option value="0.5">1/2 time</option><option value="0.25">1/4 time</option></select></label>
+<label>Months worked for the employer this year<input id="m" type="number" value="12" min="1" max="12"></label>
+<label>Leave days already used<input id="u" type="number" value="5"></label>
+<label>Gross salary (fixed), PLN / month<input id="b" type="number" value="8000"></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="lokata"></div>
+<h2>How many days of leave you get</h2>
+<p>In Poland an employee with less than 10 years of service gets 20 days of leave a year, and from 10 years — 26 days. Education counts towards service, e.g. a completed general secondary school counts as 4 years and a university degree as 8 years. Part-time employees get proportionally less, with a partial day rounded up.</p>
+<p>If you start or leave a job during the year, you get pro-rata leave: 1/12 of the annual entitlement for each month worked, also rounded up to a full day.</p>
+<h2>Payout for unused leave (ekwiwalent)</h2>
+<p>When your contract ends and you have unused leave, the employer pays it out. With a fixed salary, the monthly pay is divided by the leave coefficient — 20.92 for full time in 2026 (proportionally less for part time) — and multiplied by the number of unused days. The payout is taxed and subject to contributions like normal salary.</p>
+<p>With a fixed salary you receive your normal pay while on leave. Variable components (bonuses, overtime) are averaged over the last 3 months — this calculator does not include them.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["s","e","m","u","b"],()=>{
+  const S=num("s"),E=num("e"),M=Math.min(12,Math.max(1,Math.round(num("m")))),U=Math.max(0,num("u")),B=num("b");
+  const year=Math.ceil(S*E),days=Math.ceil(year*M/12),left=Math.max(0,days-U);
+  const coef=20.92*E,perDay=B/coef,eq=perDay*left;
+  out.innerHTML=`You are entitled to: <b>${days} days</b> of leave · ${left} left<br>Payout for ${left} days: <b>${fmt(eq)}</b> gross`;
+  tbl.innerHTML=[["Annual leave entitlement (days)",year],["Leave for "+M+" months (days)",days],["Unused days",left],["Leave coefficient 2026",coef.toFixed(2)],["Payout per day",fmt(perDay)],["Total payout (gross)",fmt(eq)]].map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Calculations are for illustration only and are not financial advice or an investment recommendation. Calculations follow Polish rules and use Polish złoty (PLN). This site contains affiliate links. © FinKalk · <a href="polityka-prywatnosci.html">Privacy policy</a> · <a href="kontakt.html">Contact</a></footer>
+</body>
+</html>

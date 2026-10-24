@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Krankengeldrechner Polen 2026 (L4) — wie viel bekomme ich bei Krankschreibung</title>
+<meta name="description" content="Berechnen Sie Lohnfortzahlung und Krankengeld bei L4-Krankschreibung in Polen 2026: 80 %, 70 % oder 100 % der Bemessungsgrundlage. Wie viel weniger als Ihr Gehalt.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css?v=6">
+<script src="../assets/site.js?v=6" defer></script>
+<script src="../assets/partners.js?v=6" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://mojekalkulatory.pl/de/kalkulator-l4.html">
+<link rel="alternate" hreflang="pl" href="https://mojekalkulatory.pl/kalkulator-l4.html">
+<link rel="alternate" hreflang="en" href="https://mojekalkulatory.pl/en/kalkulator-l4.html">
+<link rel="alternate" hreflang="uk" href="https://mojekalkulatory.pl/uk/kalkulator-l4.html">
+<link rel="alternate" hreflang="ru" href="https://mojekalkulatory.pl/ru/kalkulator-l4.html">
+<link rel="alternate" hreflang="de" href="https://mojekalkulatory.pl/de/kalkulator-l4.html">
+<link rel="alternate" hreflang="x-default" href="https://mojekalkulatory.pl/kalkulator-l4.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Zinseszins</a><a href="kalkulator-kredytu.html">Kredit</a><a href="nadplata-kredytu.html">Sondertilgung</a><a href="lokata.html">Festgeld</a><a href="obligacje-skarbowe.html">Staatsanleihen</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Passives Einkommen</a><a href="kalkulator-wynagrodzen.html">Gehalt</a><a href="kalkulator-l4.html">Krankengeld (L4)</a><a href="kalkulator-urlopu.html">Urlaub</a><a href="kalkulator-b2b.html">B2B / JDG</a></nav>
+<!--i18n--><div class="lang"><a href="../kalkulator-l4.html" hreflang="pl">PL</a><a href="../en/kalkulator-l4.html" hreflang="en">EN</a><a href="../uk/kalkulator-l4.html" hreflang="uk">UA</a><a href="../ru/kalkulator-l4.html" hreflang="ru">RU</a><a href="../de/kalkulator-l4.html" hreflang="de" aria-current="true">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Krankengeldrechner (L4) — wie viel Sie bekommen</h1>
+<div class="card grid">
+<label>Durchschnittliches Bruttogehalt (12 Monate), PLN<input id="b" type="number" value="8000"></label>
+<label>Tage krankgeschrieben<input id="d" type="number" value="10"></label>
+<label>Art der Krankschreibung<select id="p"><option value="0.8">Normale Krankheit — 80 %</option><option value="0.7">Krankenhausaufenthalt — 70 %</option><option value="1">Schwangerschaft, Wegeunfall zur/von der Arbeit — 100 %</option></select></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="lokata"></div>
+<h2>So wird das Krankengeld berechnet</h2>
+<p>Grundlage ist Ihr durchschnittliches Bruttogehalt der letzten 12 Monate abzüglich 13,71 % (Renten-, Erwerbsunfähigkeits- und Krankenversicherungsbeitrag des Arbeitnehmers). Der Tagessatz beträgt 1/30 dieses Betrags mal 80 % — oder 70 % bei Krankenhausaufenthalt und 100 % in der Schwangerschaft oder nach einem Wegeunfall.</p>
+<p>Die ersten 33 Krankheitstage im Jahr (14 Tage ab 50 Jahren) zahlt der Arbeitgeber — das ist die wynagrodzenie chorobowe. Ab dem nächsten Tag zahlt die ZUS Krankengeld (zasiłek chorobowy). Die Höhe ist gleich. Vom Krankengeld werden keine ZUS- und Krankenversicherungsbeiträge abgezogen, nur die PIT-Vorauszahlung.</p>
+<h2>Was sich 2026 geändert hat</h2>
+<p>Seit dem 13. April 2026 gelten neue Regeln für die Kontrolle von Krankschreibungen, und die Gründe für den Verlust des Krankengelds sind genauer gefasst: Erwerbsarbeit und Tätigkeiten, die dem Zweck der Krankschreibung widersprechen. Gelegentliche Handlungen wie das Beantworten einer E-Mail sollten nicht zum Verlust führen. Die Sätze 80 % / 70 % / 100 % sind unverändert.</p>
+<p>Das Nettoergebnis ist eine Näherung: Wir ziehen 12 % Steuer vom Bruttobetrag ab. Den genauen Betrag berechnet Ihr Arbeitgeber oder die ZUS — z. B. wenn Prämien in die Grundlage einfließen oder Sie kürzer als 12 Monate beschäftigt sind.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["b","d","p"],()=>{
+  const B=num("b"),D=Math.max(0,Math.round(num("d"))),P=num("p");
+  const base=B*(1-0.1371),daily=base/30*P,gross=daily*D,net=gross*0.88;
+  const zus=B*0.1371,zdr=(B-zus)*0.09,normal=(B-zus-zdr-Math.max(0,Math.round((B-zus-250)*0.12-300)))*D/30;
+  out.innerHTML=`Für ${D} Tage L4: <b>${fmt(net)}</b> netto (ca.)<br>Brutto: ${fmt(gross)} · Sie verlieren ca. ${fmt(Math.max(0,normal-net))} gegenüber Ihrem Gehalt`;
+  tbl.innerHTML=[["Bemessungsgrundlage (brutto − 13,71 %)",base],["Tagessatz",daily],["Krankengeld brutto",gross],["Krankengeld netto (ca.)",net],["Nettogehalt für diese Tage ohne L4 (ca.)",normal]].map(x=>`<tr><td>${x[0]}</td><td>${fmt(x[1])}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Die Berechnungen dienen nur zur Orientierung und sind keine Finanz- oder Anlageberatung. Berechnet nach polnischen Regeln in Złoty (PLN). Diese Seite enthält Partnerlinks. © FinKalk · <a href="polityka-prywatnosci.html">Datenschutz</a> · <a href="kontakt.html">Kontakt</a></footer>
+</body>
+</html>

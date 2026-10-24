@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sick Pay Calculator Poland 2026 (L4) — How Much You Get on Sick Leave</title>
+<meta name="description" content="Calculate sick pay and sickness benefit on L4 sick leave in Poland in 2026: 80%, 70% or 100% of the base. See how much less you get than your salary.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css?v=6">
+<script src="../assets/site.js?v=6" defer></script>
+<script src="../assets/partners.js?v=6" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://mojekalkulatory.pl/en/kalkulator-l4.html">
+<link rel="alternate" hreflang="pl" href="https://mojekalkulatory.pl/kalkulator-l4.html">
+<link rel="alternate" hreflang="en" href="https://mojekalkulatory.pl/en/kalkulator-l4.html">
+<link rel="alternate" hreflang="uk" href="https://mojekalkulatory.pl/uk/kalkulator-l4.html">
+<link rel="alternate" hreflang="ru" href="https://mojekalkulatory.pl/ru/kalkulator-l4.html">
+<link rel="alternate" hreflang="de" href="https://mojekalkulatory.pl/de/kalkulator-l4.html">
+<link rel="alternate" hreflang="x-default" href="https://mojekalkulatory.pl/kalkulator-l4.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Compound interest</a><a href="kalkulator-kredytu.html">Loan</a><a href="nadplata-kredytu.html">Loan overpayment</a><a href="lokata.html">Deposit</a><a href="obligacje-skarbowe.html">Bonds</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Passive income</a><a href="kalkulator-wynagrodzen.html">Salary</a><a href="kalkulator-l4.html">Sick leave (L4)</a><a href="kalkulator-urlopu.html">Holiday leave</a><a href="kalkulator-b2b.html">B2B / JDG</a></nav>
+<!--i18n--><div class="lang"><a href="../kalkulator-l4.html" hreflang="pl">PL</a><a href="../en/kalkulator-l4.html" hreflang="en" aria-current="true">EN</a><a href="../uk/kalkulator-l4.html" hreflang="uk">UA</a><a href="../ru/kalkulator-l4.html" hreflang="ru">RU</a><a href="../de/kalkulator-l4.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Sick pay calculator (L4) — how much you get</h1>
+<div class="card grid">
+<label>Average gross salary over 12 months, PLN<input id="b" type="number" value="8000"></label>
+<label>Days on sick leave<input id="d" type="number" value="10"></label>
+<label>Type of sick leave<select id="p"><option value="0.8">Regular illness — 80%</option><option value="0.7">Hospital stay — 70%</option><option value="1">Pregnancy, accident on the way to/from work — 100%</option></select></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="lokata"></div>
+<h2>How sick pay is calculated</h2>
+<p>The base is your average gross salary over the last 12 months minus 13.71% (the employee’s pension, disability and sickness contributions). The daily rate is 1/30 of that amount times 80% — or 70% for a hospital stay and 100% during pregnancy or after an accident on the way to or from work.</p>
+<p>For the first 33 days of illness in a year (14 days if you are 50 or older) your employer pays — this is called wynagrodzenie chorobowe. From the next day ZUS pays sickness benefit (zasiłek chorobowy). The amount is the same. No ZUS or health contributions are deducted from sick pay, only the PIT income tax advance.</p>
+<h2>What changed in 2026</h2>
+<p>Since 13 April 2026 new rules on checking sick leave apply, and the reasons for losing the benefit are defined more precisely: paid work and activity inconsistent with the purpose of the leave. Occasional tasks, such as replying to an e-mail, should not cost you the benefit. The 80% / 70% / 100% rates did not change.</p>
+<p>The net result is approximate: we subtract 12% tax from the gross amount. Your employer or ZUS will calculate the exact amount — e.g. when bonuses are part of the base or you have worked for less than 12 months.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["b","d","p"],()=>{
+  const B=num("b"),D=Math.max(0,Math.round(num("d"))),P=num("p");
+  const base=B*(1-0.1371),daily=base/30*P,gross=daily*D,net=gross*0.88;
+  const zus=B*0.1371,zdr=(B-zus)*0.09,normal=(B-zus-zdr-Math.max(0,Math.round((B-zus-250)*0.12-300)))*D/30;
+  out.innerHTML=`For ${D} days of L4: <b>${fmt(net)}</b> net (approx.)<br>Gross: ${fmt(gross)} · You lose approx. ${fmt(Math.max(0,normal-net))} compared with your salary`;
+  tbl.innerHTML=[["Base (gross − 13.71%)",base],["Daily rate",daily],["Sick pay, gross",gross],["Sick pay, net (approx.)",net],["Net salary for these days without L4 (approx.)",normal]].map(x=>`<tr><td>${x[0]}</td><td>${fmt(x[1])}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Calculations are for illustration only and are not financial advice or an investment recommendation. Calculations follow Polish rules and use Polish złoty (PLN). This site contains affiliate links. © FinKalk · <a href="polityka-prywatnosci.html">Privacy policy</a> · <a href="kontakt.html">Contact</a></footer>
+</body>
+</html>
