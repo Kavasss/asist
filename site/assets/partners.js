@@ -1,16 +1,17 @@
 // Oferty partnerskie. Blok wyświetla się tylko, gdy uzupełniony jest url.
 // url        — Twój link afiliacyjny z sieci (MyLead, Systempartnerski.pl, Afilo, Comperia, Awin itp.)
 // advertiser — nazwa reklamodawcy (opcjonalnie, do oznaczenia reklamy)
+const LINK_PF = "https://kavasss.produktyfinansowe.pl/e/lead/3332?source=lt";
+
 const PARTNERS = {
   lokata: [
-    { title: "Najlepsze lokaty i konta oszczędnościowe", text: "Porównaj oprocentowanie banków i załóż lokatę online", cta: "Sprawdź oferty", url: "", advertiser: "" },
+    { title: "Porównaj oferty banków", text: "Sprawdź aktualne oferty kont, lokat i innych produktów finansowych", cta: "Porównaj oferty", url: LINK_PF, advertiser: "" },
   ],
   invest: [
-    { title: "Konto maklerskie / IKE / IKZE", text: "Zacznij inwestować w ETF-y od niewielkiej kwoty", cta: "Otwórz konto", url: "", advertiser: "" },
+    { title: "Porównaj produkty finansowe", text: "Zobacz aktualne oferty banków i instytucji finansowych w jednym miejscu", cta: "Zobacz oferty", url: LINK_PF, advertiser: "" },
   ],
   kredyt: [
-    { title: "Kredyt konsolidacyjny", text: "Połącz raty i obniż miesięczną spłatę", cta: "Sprawdź ratę", url: "", advertiser: "" },
-    { title: "Karta kredytowa z okresem bezodsetkowym", text: "Nawet kilkadziesiąt dni bez odsetek", cta: "Zamów kartę", url: "", advertiser: "" },
+    { title: "Porównaj oferty kredytów i pożyczek", text: "Sprawdź, gdzie możesz dostać lepsze warunki", cta: "Porównaj oferty", url: LINK_PF, advertiser: "" },
   ],
 };
 
