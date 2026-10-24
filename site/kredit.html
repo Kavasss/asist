@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Кредитный калькулятор — ежемесячный платёж и переплата</title>
+<meta name="description" content="Онлайн-расчёт аннуитетного платежа по кредиту или ипотеке: ежемесячный платёж, переплата, график.">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js" defer></script>
+</head>
+<body>
+<header>
+<a href="index.html">💰 ФинКальк</a>
+<nav><a href="slozhnyj-procent.html">Сложный процент</a><a href="kredit.html">Кредит</a><a href="vklad.html">Вклад</a><a href="passivnyj-dohod.html">Пассивный доход</a></nav>
+</header>
+<main>
+<h1>Кредитный калькулятор</h1>
+<div class="card grid">
+<label>Сумма кредита, ₽<input id="s" type="number" value="1000000"></label>
+<label>Ставка, % годовых<input id="r" type="number" value="18" step="0.1"></label>
+<label>Срок, месяцев<input id="n" type="number" value="60"></label>
+</div>
+<div class="card result" id="out"></div>
+<h2>Что такое аннуитетный платёж</h2>
+<p>Это одинаковый ежемесячный платёж на весь срок. В начале большая часть идёт на проценты, к концу — на погашение основного долга. Досрочное погашение в первые годы экономит больше всего.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["s","r","n"],()=>{
+  const S=num("s"),i=num("r")/100/12,n=Math.max(1,num("n"));
+  const pay=i?S*i/(1-Math.pow(1+i,-n)):S/n;
+  out.innerHTML=`Платёж в месяц: <b>${fmt(pay)}</b><br>Всего выплат: ${fmt(pay*n)} · Переплата: ${fmt(pay*n-S)}`;
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Расчёты носят справочный характер и не являются финансовой рекомендацией. © ФинКальк</footer>
+</body>
+</html>
