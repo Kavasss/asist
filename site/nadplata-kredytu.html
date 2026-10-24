@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kalkulator nadpłaty kredytu — ile zaoszczędzisz na odsetkach</title>
+<meta name="description" content="Sprawdź, ile zaoszczędzisz, nadpłacając kredyt hipoteczny lub gotówkowy: skrócenie okresu czy niższa rata. Nadpłata jednorazowa i co miesiąc.">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js" defer></script>
+<script src="assets/partners.js" defer></script>
+</head>
+<body>
+<header>
+<a href="index.html">💰 FinKalk</a>
+<nav><a href="procent-skladany.html">Procent składany</a><a href="kalkulator-kredytu.html">Kredyt</a><a href="nadplata-kredytu.html">Nadpłata kredytu</a><a href="lokata.html">Lokata</a><a href="obligacje-skarbowe.html">Obligacje</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Dochód pasywny</a><a href="kalkulator-wynagrodzen.html">Wynagrodzenie</a><a href="kalkulator-b2b.html">B2B / JDG</a></nav>
+</header>
+<main>
+<h1>Kalkulator nadpłaty kredytu</h1>
+<div class="card grid">
+<label>Pozostało do spłaty, zł<input id="s" type="number" value="400000"></label>
+<label>Oprocentowanie, % rocznie<input id="r" type="number" value="7" step="0.01"></label>
+<label>Pozostały okres, miesiące<input id="n" type="number" value="300"></label>
+<label>Nadpłata jednorazowa teraz, zł<input id="o" type="number" value="20000"></label>
+<label>Nadpłata co miesiąc, zł<input id="m" type="number" value="500"></label>
+<label>Efekt nadpłaty<select id="e"><option value="1">Skrócenie okresu</option><option value="0">Niższa rata</option></select></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="kredyt"></div>
+<h2>Skrócenie okresu czy niższa rata?</h2>
+<p>Skrócenie okresu kredytowania prawie zawsze daje większą oszczędność na odsetkach, bo rata zostaje taka sama, a kapitał spada szybciej. Obniżenie raty zmniejsza miesięczne obciążenie i poprawia płynność — to dobry wybór, gdy budżet domowy jest napięty albo chcesz mieć zapas na nieprzewidziane wydatki.</p>
+<h2>Czy bank może pobrać prowizję?</h2>
+<p>Przy kredycie hipotecznym ze zmiennym oprocentowaniem bank może pobrać prowizję za nadpłatę tylko w pierwszych 3 latach, a później nadpłata jest bezpłatna. Przy kredycie gotówkowym ze zmiennym oprocentowaniem nadpłata jest bezpłatna, a przy stałym prowizja jest ograniczona ustawą. Szczegóły znajdziesz w umowie kredytowej.</p>
+<h2>Nadpłacać kredyt czy inwestować?</h2>
+<p>Nadpłata to „zysk” równy oprocentowaniu kredytu — bez ryzyka i bez podatku Belki. Jeśli kredyt kosztuje 7%, a lokata czy obligacje dają 4–5% przed podatkiem, nadpłata zwykle wygrywa. Zanim nadpłacisz, zbuduj poduszkę finansową na 3–6 miesięcy wydatków.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["s","r","n","o","m","e"],()=>{
+  const S=num("s"),i=num("r")/100/12,N=Math.max(1,Math.round(num("n"))),M=Math.max(0,num("m")),shorten=num("e")===1;
+  const annuity=(P,k)=>k<=0?P:i?P*i/(1-Math.pow(1+i,-k)):P/k;
+  const base=annuity(S,N),baseInt=base*N-S;
+  let P=Math.max(0,S-Math.max(0,num("o"))),rate=annuity(P,N),interest=0,months=0,first=rate;
+  while(P>0.01&&months<N){
+    const int=P*i;interest+=int;months++;
+    P=P+int-Math.min(rate,P+int);
+    if(P>0){P=Math.max(0,P-M);if(!shorten&&P>0)rate=annuity(P,N-months);}
+  }
+  const saved=baseInt-interest;
+  out.innerHTML=`Oszczędzasz na odsetkach: <b>${fmt(saved)}</b><br>${shorten?`Kredyt spłacisz ${N-months} mies. wcześniej (${((N-months)/12).toFixed(1).replace(".",",")} lat).`:`Nowa rata po jednorazowej nadpłacie: ${fmt(first)} zamiast ${fmt(base)}.`}`;
+  tbl.innerHTML=[["Rata bez nadpłaty",base],["Odsetki bez nadpłaty",baseInt],["Odsetki z nadpłatą",interest],["Liczba rat z nadpłatą",months]].map((x,k)=>`<tr><td>${x[0]}</td><td>${k===3?x[1]:fmt(x[1])}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Obliczenia mają charakter poglądowy i nie stanowią porady finansowej ani rekomendacji inwestycyjnej. Strona zawiera linki partnerskie. © FinKalk</footer>
+</body>
+</html>

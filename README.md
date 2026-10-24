@@ -5,7 +5,7 @@
 Хостинг бесплатный (GitHub Pages).
 
 ## Что внутри
-- `site/` — 4 калькулятора: procent składany, kredyt (rata), lokata (с podatkiem Belki 19%), dochód pasywny (zasada 4%)
+- `site/` — 9 калькуляторов: procent składany, kredyt (rata), nadpłata kredytu, lokata (с podatkiem Belki 19%), obligacje skarbowe (EDO/COI/TOS/ROR/DOR), IKZE (ulga podatkowa 2026), dochód pasywny (zasada 4%), wynagrodzenie brutto/netto, B2B
 - `site/assets/site.js` → `SITE_CONFIG` — ID AdSense
 - `site/assets/partners.js` → `PARTNERS` — партнёрские ссылки; блок с пометкой «Reklama» появляется под результатом, как только заполнен `url`
 - `.github/workflows/pages.yml` — автопубликация на GitHub Pages
@@ -29,9 +29,16 @@
 5. **Налоги:** доход из Польши/от польских сетей нужно декларировать. Многие сети платят
    физлицам или требуют JDG/działalność nierejestrowana — уточните у сети и бухгалтера.
 
+## Ниши с большим спросом и слабой конкуренцией
+- **obligacje skarbowe** — после 2022 года поляки массово покупают облигации; запросы «kalkulator obligacji», «EDO czy COI» стабильно ищут каждый месяц, а сайты с калькуляторами в основном блоги.
+- **nadpłata kredytu** — миллионы ипотек под плавающую ставку; хорошо монетизируется кредитными и рефинансовыми офферами.
+- **IKZE** — пик запросов в ноябре–декабре (успеть внести до конца года) и в период PIT (февраль–апрель); офферы брокеров (IKE/IKZE) платят за регистрацию.
+
+⚠️ Ставки облигаций (октябрь 2026) и лимиты IKE/IKZE (2026) прописаны в страницах — обновляйте их, когда Минфин меняет предложение (обычно в последние дни месяца) и в начале каждого года.
+
 ## Как увеличить доход
 - Больше калькуляторов под частые польские запросы: kalkulator wynagrodzeń (brutto/netto),
-  kalkulator kredytu hipotecznego, nadpłata kredytu, IKE/IKZE, obligacje skarbowe, inflacja, emerytura.
+  kalkulator kredytu hipotecznego, inflacja, emerytura, zasiłek chorobowy (L4), urlop wypoczynkowy, IKE.
 - 300–800 слов полезного текста на каждой странице — для позиций в Google.
 - Своя домена `.pl` (~10–50 zł/год) повышает доверие и шансы на одобрение в AdSense.
 

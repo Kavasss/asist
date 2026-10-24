@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kalkulator obligacji skarbowych 2026 — EDO, COI, TOS, ROR</title>
+<meta name="description" content="Porównaj zysk z obligacji skarbowych EDO, COI, TOS i ROR po podatku Belki. Oferta na październik 2026, własny scenariusz inflacji.">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js" defer></script>
+<script src="assets/partners.js" defer></script>
+</head>
+<body>
+<header>
+<a href="index.html">💰 FinKalk</a>
+<nav><a href="procent-skladany.html">Procent składany</a><a href="kalkulator-kredytu.html">Kredyt</a><a href="nadplata-kredytu.html">Nadpłata kredytu</a><a href="lokata.html">Lokata</a><a href="obligacje-skarbowe.html">Obligacje</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Dochód pasywny</a><a href="kalkulator-wynagrodzen.html">Wynagrodzenie</a><a href="kalkulator-b2b.html">B2B / JDG</a></nav>
+</header>
+<main>
+<h1>Kalkulator obligacji skarbowych 2026</h1>
+<p>Sprawdź, ile zarobisz na obligacjach oszczędnościowych Skarbu Państwa po podatku Belki i czy pokonasz inflację.</p>
+<div class="card grid">
+<label>Kwota inwestycji, zł<input id="k" type="number" value="10000" step="100"></label>
+<label>Zakładana inflacja, % rocznie<input id="inf" type="number" value="3.5" step="0.1"></label>
+<label>Stopa referencyjna NBP, %<input id="nbp" type="number" value="3.75" step="0.25"></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="invest"></div>
+<h2>Oprocentowanie obligacji — październik 2026</h2>
+<p>Oferta Ministerstwa Finansów na październik 2026 nie zmieniła się od kwietnia. Jedna obligacja kosztuje 100 zł.</p>
+<div class="card"><table>
+<tr><th>Obligacja</th><th>Okres</th><th>1. okres</th><th>Kolejne okresy</th></tr>
+<tr><td>ROR</td><td>1 rok</td><td>4,00%</td><td>stopa ref. NBP, co miesiąc</td></tr>
+<tr><td>DOR</td><td>2 lata</td><td>4,15%</td><td>stopa ref. NBP + 0,15 pp.</td></tr>
+<tr><td>TOS</td><td>3 lata</td><td>4,40%</td><td>stałe 4,40%</td></tr>
+<tr><td>COI</td><td>4 lata</td><td>4,75%</td><td>inflacja + 1,50 pp.</td></tr>
+<tr><td>EDO</td><td>10 lat</td><td>5,35%</td><td>inflacja + 2,00 pp.</td></tr>
+</table></div>
+<h2>Które obligacje wybrać?</h2>
+<p><b>EDO</b> (10-letnie) kapitalizują odsetki co roku i są chronione przed inflacją — to najlepszy wybór na długi termin, zwłaszcza w ramach IKE, gdzie nie płacisz podatku Belki. <b>COI</b> (4-letnie) wypłacają odsetki co roku, więc nadają się dla osób, które chcą regularnego dochodu pasywnego. <b>TOS</b> dają stałe oprocentowanie przez 3 lata — opłacają się, gdy spodziewasz się spadku inflacji i stóp procentowych. <b>ROR</b> to krótki termin i oprocentowanie zależne od decyzji RPP.</p>
+<p>Obligacje można wykupić przed terminem za niewielką opłatą (zwykle 0,50–3 zł od sztuki), która nie może przekroczyć naliczonych odsetek. Kupisz je przez serwis obligacjeskarbowe.pl, w PKO BP lub Banku Pekao.</p>
+<h2>Jak liczymy</h2>
+<p>Dla EDO i TOS odsetki są kapitalizowane co rok, a podatek 19% pobierany jest przy wykupie. COI wypłacają odsetki co roku (opodatkowane na bieżąco, bez kapitalizacji). Dla ROR przyjmujemy 4,00% w pierwszym miesiącu i stopę NBP w kolejnych, z miesięczną wypłatą odsetek. „Realnie” oznacza zysk po odjęciu wpisanej inflacji. Wyniki COI i EDO są szacunkiem — zależą od faktycznej inflacji.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["k","inf","nbp"],()=>{
+  const K=Math.floor(num("k")/100)*100,inf=num("inf")/100,nbp=num("nbp")/100,T=0.19;
+  const rate=(first,next,y)=>y===0?first:Math.max(0,next);
+  const capitalized=(first,next,n)=>{let v=K;for(let y=0;y<n;y++)v*=1+rate(first,next,y);return K+(v-K)*(1-T);};
+  const paidOut=(first,next,n)=>{let s=K;for(let y=0;y<n;y++)s+=K*rate(first,next,y)*(1-T);return s;};
+  const ror=K+K*((0.04+11*nbp)/12)*(1-T);
+  const rows=[
+    ["ROR",1,ror],
+    ["DOR",2,K+K*(((0.0415+11*(nbp+0.0015))/12)+(nbp+0.0015))*(1-T)],
+    ["TOS",3,capitalized(0.044,0.044,3)],
+    ["COI",4,paidOut(0.0475,inf+0.015,4)],
+    ["EDO",10,capitalized(0.0535,inf+0.02,10)],
+  ].map(([n,y,v])=>({n,y,v,a:Math.pow(v/K,1/y)-1}));
+  const best=rows.reduce((a,b)=>b.a>a.a?b:a);
+  const pct=(x)=>(x*100).toFixed(2).replace(".",",")+"%";
+  out.innerHTML=K?`Najwyższy roczny zysk netto: <b>${best.n} — ${pct(best.a)}</b><br>Za ${fmt(K)} kupisz ${K/100} obligacji po 100 zł.`:"Wpisz kwotę (min. 100 zł).";
+  tbl.innerHTML=`<tr><th>Obligacja</th><th>Okres</th><th>Wartość netto</th><th>Zysk netto</th><th>Netto / rok</th><th>Realnie / rok</th></tr>`+
+    rows.map(r=>`<tr><td>${r.n}</td><td>${r.y} ${r.y===1?"rok":r.y<5?"lata":"lat"}</td><td>${fmt(r.v)}</td><td>${fmt(r.v-K)}</td><td>${pct(r.a)}</td><td>${pct((1+r.a)/(1+inf)-1)}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Obliczenia mają charakter poglądowy i nie stanowią porady finansowej ani rekomendacji inwestycyjnej. Strona zawiera linki partnerskie. © FinKalk</footer>
+</body>
+</html>
