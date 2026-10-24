@@ -12,7 +12,7 @@
 
 ## Что нужно сделать вам (за вас это сделать нельзя — нужен ваш аккаунт и данные для выплат)
 1. **Включить сайт:** GitHub → Settings → Pages → Source: **GitHub Actions**, затем Actions → «Deploy site to GitHub Pages» → Run workflow.
-   Адрес: `https://kavasss.github.io/asist/`
+   Адрес: `https://mojekalkulatory.pl/` (домен подключён через `site/CNAME` и Settings → Pages → Custom domain; DNS: 4 записи A на 185.199.108–111.153 и CNAME www → kavasss.github.io)
 2. **Google Search Console:** добавить сайт и отправить `sitemap.xml`.
 3. **Партнёрские сети с финансовыми офферами в Польше** (регистрация бесплатная):
    - [MyLead](https://mylead.global) — польская CPA-сеть, много финансовых офферов

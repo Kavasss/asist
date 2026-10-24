@@ -15,7 +15,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from strings import COMMON, PAGES  # noqa: E402
 
 SITE = Path(__file__).resolve().parents[2] / "site"
-BASE = "https://kavasss.github.io/asist/"
+BASE = "https://mojekalkulatory.pl/"
 LANGS = ["pl", "en", "uk", "ru", "de"]
 LABEL = {"pl": "PL", "en": "EN", "uk": "UA", "ru": "RU", "de": "DE"}
 POLISH_CHARS = re.compile(r"[ąćęłńśźżĄĆĘŁŃŚŹŻ]")
