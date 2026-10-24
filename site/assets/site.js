@@ -3,7 +3,17 @@ const SITE_CONFIG = {
   // Wpisz swoje ID po akceptacji w Google AdSense — reklamy włączą się automatycznie.
   adsenseClient: "",        // np. "ca-pub-1234567890123456"
   adsenseSlot: "",
+  contactEmail: "hukobvdibd@gmail.com",         // adres pokazywany na stronach Kontakt i Polityka prywatności
 };
+
+// Wstawia adres e-mail w elementy <span data-email> (składany w JS, żeby boty go nie zbierały).
+function fillEmail() {
+  const e = SITE_CONFIG.contactEmail;
+  document.querySelectorAll("[data-email]").forEach((el) => {
+    el.innerHTML = e ? `<a href="mailto:${e}">${e}</a>` : "—";
+  });
+}
+document.addEventListener("DOMContentLoaded", fillEmail);
 
 const fmt = (n) => new Intl.NumberFormat("pl-PL", { style: "currency", currency: "PLN", maximumFractionDigits: 0 }).format(Math.round(n));
 const num = (id) => parseFloat(String(document.getElementById(id).value).replace(",", ".")) || 0;
