@@ -1,7 +1,7 @@
 // Wspólne funkcje: formatowanie i reklamy.
 const SITE_CONFIG = {
   // Wpisz swoje ID po akceptacji w Google AdSense — reklamy włączą się automatycznie.
-  adsenseClient: "",        // np. "ca-pub-1234567890123456"
+  adsenseClient: "ca-pub-6163251646983594",
   adsenseSlot: "",
   contactEmail: "hukobvdibd@gmail.com",         // adres pokazywany na stronach Kontakt i Polityka prywatności
 };
@@ -24,12 +24,10 @@ function bindCalc(ids, fn) {
 }
 
 function loadAds() {
+  // Skrypt AdSense jest wpięty w <head> każdej strony (wymóg weryfikacji); tu tylko wypełniamy bloki .ad,
+  // gdy jest ustawiony adsenseSlot. Bez slotu reklamy rozmieszcza Automatyczna reklama AdSense.
   const slots = document.querySelectorAll(".ad");
-  if (!slots.length || !SITE_CONFIG.adsenseClient) return;
-  const s = document.createElement("script");
-  s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=" + SITE_CONFIG.adsenseClient;
-  s.async = true; s.crossOrigin = "anonymous";
-  document.head.appendChild(s);
+  if (!slots.length || !SITE_CONFIG.adsenseClient || !SITE_CONFIG.adsenseSlot) return;
   slots.forEach((el) => {
     el.innerHTML = `<ins class="adsbygoogle" style="display:block" data-ad-client="${SITE_CONFIG.adsenseClient}" data-ad-slot="${SITE_CONFIG.adsenseSlot}" data-ad-format="auto" data-full-width-responsive="true"></ins>`;
     (window.adsbygoogle = window.adsbygoogle || []).push({});
