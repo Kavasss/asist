@@ -29,6 +29,7 @@ const PARTNERS = {
   lokata: [OFFERS.mbank, OFFERS.bnp],
   invest: [OFFERS.mbank, OFFERS.bnp],
   kredyt: [OFFERS.mbank, OFFERS.bnp],
+  firma: [OFFERS.pekao],
 };
 
 function renderPartners() {
