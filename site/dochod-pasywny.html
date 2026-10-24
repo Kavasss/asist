@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kalkulator dochodu pasywnego i niezależności finansowej</title>
+<meta name="description" content="Sprawdź, jaki kapitał potrzebujesz, by żyć z dochodu pasywnego, i ile lat zajmie Ci dojście do celu.">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js" defer></script>
+<script src="assets/partners.js" defer></script>
+</head>
+<body>
+<header>
+<a href="index.html">💰 FinKalk</a>
+<nav><a href="procent-skladany.html">Procent składany</a><a href="kalkulator-kredytu.html">Kredyt</a><a href="lokata.html">Lokata</a><a href="dochod-pasywny.html">Dochód pasywny</a></nav>
+</header>
+<main>
+<h1>Kalkulator dochodu pasywnego</h1>
+<div class="card grid">
+<label>Pożądany dochód miesięczny, zł<input id="d" type="number" value="6000"></label>
+<label>Bezpieczna stopa wypłat, % rocznie<input id="w" type="number" value="4" step="0.1"></label>
+<label>Zgromadzony kapitał, zł<input id="p" type="number" value="20000"></label>
+<label>Odkładam miesięcznie, zł<input id="m" type="number" value="1500"></label>
+<label>Stopa zwrotu, % rocznie<input id="r" type="number" value="7" step="0.1"></label>
+</div>
+<div class="card result" id="out"></div>
+<div data-partners="invest"></div>
+<h2>Zasada 4%</h2>
+<p>Przyjmuje się, że z portfela można wypłacać około 4% rocznie (z korektą o inflację) bez dużego ryzyka szybkiego wyczerpania kapitału. Potrzebny kapitał ≈ roczne wydatki × 25.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["d","w","p","m","r"],()=>{
+  const goal=num("d")*12/(Math.max(0.1,num("w"))/100),i=num("r")/100/12;
+  let bal=num("p"),mo=0;while(bal<goal&&mo<1200){bal=bal*(1+i)+num("m");mo++;}
+  out.innerHTML=`Potrzebny kapitał: <b>${fmt(goal)}</b><br>`+(mo>=1200?"Przy tych założeniach cel nie zostanie osiągnięty w ciągu 100 lat":`Do celu: ${Math.floor(mo/12)} lat ${mo%12} mies.`);
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Obliczenia mają charakter poglądowy i nie stanowią porady finansowej ani rekomendacji inwestycyjnej. Strona zawiera linki partnerskie. © FinKalk</footer>
+</body>
+</html>

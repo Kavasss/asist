@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kalkulator lokaty z podatkiem Belki</title>
+<meta name="description" content="Oblicz zysk z lokaty bankowej netto, po potrąceniu 19% podatku Belki, z kapitalizacją lub bez.">
+<link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js" defer></script>
+<script src="assets/partners.js" defer></script>
+</head>
+<body>
+<header>
+<a href="index.html">💰 FinKalk</a>
+<nav><a href="procent-skladany.html">Procent składany</a><a href="kalkulator-kredytu.html">Kredyt</a><a href="lokata.html">Lokata</a><a href="dochod-pasywny.html">Dochód pasywny</a></nav>
+</header>
+<main>
+<h1>Kalkulator lokaty</h1>
+<div class="card grid">
+<label>Kwota lokaty, zł<input id="s" type="number" value="20000"></label>
+<label>Oprocentowanie, % rocznie<input id="r" type="number" value="5" step="0.1"></label>
+<label>Okres, miesiące<input id="n" type="number" value="12"></label>
+<label>Kapitalizacja<select id="c"><option value="0">Na koniec okresu</option><option value="1">Miesięczna</option></select></label>
+</div>
+<div class="card result" id="out"></div>
+<div data-partners="lokata"></div>
+<h2>Podatek Belki</h2>
+<p>Od odsetek z lokat i kont oszczędnościowych bank automatycznie pobiera 19% podatku od zysków kapitałowych (tzw. podatek Belki). Kalkulator pokazuje zysk brutto i netto.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["s","r","n","c"],()=>{
+  const S=num("s"),i=num("r")/100/12,n=num("n");
+  let gross;
+  if(num("c")){let b=S;for(let k=0;k<n;k++)b+=Math.round(b*i*0.81*100)/100;gross=null;var net=b-S;}
+  else{gross=S*i*n;var net=gross*0.81;}
+  out.innerHTML=`Zysk netto: <b>${fmt(net)}</b><br>`+(gross!==null?`Zysk brutto: ${fmt(gross)} · Podatek Belki: ${fmt(gross-net)}<br>`:"")+`Na koniec: ${fmt(S+net)}`;
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Obliczenia mają charakter poglądowy i nie stanowią porady finansowej ani rekomendacji inwestycyjnej. Strona zawiera linki partnerskie. © FinKalk</footer>
+</body>
+</html>
