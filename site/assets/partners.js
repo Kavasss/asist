@@ -21,15 +21,21 @@ const OFFERS = {
     note: "Dla nowych klientów Banku Pekao (bez konta w banku w ostatnim roku). Szczegóły w regulaminie promocji.",
     cta: "Otwórz konto firmowe", url: "https://kavasss.produktyfinansowe.pl/e/lead/2189?source=lt", advertiser: "Bank Pekao S.A.",
   },
+  alior: {
+    title: "Konto firmowe Alior Bank — załóż online w kilka minut",
+    text: "Rachunek dla JDG i spółek zakładany przez internet, z kartą firmową i aplikacją mobilną. Sprawdź aktualną promocję z premią dla nowych firm.",
+    note: "Dla nowych klientów biznesowych Alior Banku. Wysokość premii i warunki — w aktualnym regulaminie promocji.",
+    cta: "Załóż konto firmowe", url: "https://kavasss.produktyfinansowe.pl/e/lead/42?source=lt", advertiser: "Alior Bank S.A.",
+  },
 };
 
 // Które oferty pokazujemy w danym miejscu strony (data-partners="...").
 const PARTNERS = {
-  home: [OFFERS.mbank, OFFERS.bnp, OFFERS.pekao],
+  home: [OFFERS.mbank, OFFERS.bnp, OFFERS.pekao, OFFERS.alior],
   lokata: [OFFERS.mbank, OFFERS.bnp],
   invest: [OFFERS.mbank, OFFERS.bnp],
   kredyt: [OFFERS.mbank, OFFERS.bnp],
-  firma: [OFFERS.pekao],
+  firma: [OFFERS.pekao, OFFERS.alior],
 };
 
 function renderPartners() {
