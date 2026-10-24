@@ -152,10 +152,11 @@ footer{color:var(--muted);font-size:.82rem;border-top:1px solid var(--border);ma
 }
 
 /* przełącznik języków */
-.lang{display:flex;gap:2px;margin-left:auto}
-.lang a{color:var(--muted);text-decoration:none;font:600 .75rem/1 var(--mono);padding:6px 8px;border-radius:999px;border:1px solid transparent}
-.lang a:hover{color:var(--text);border-color:var(--border)}
-.lang a[aria-current]{color:var(--bg);background:var(--grad)}
+.lang{display:flex;gap:8px;margin-left:auto}
+.lang a{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;
+  border:1px solid var(--border-hi);color:var(--muted);text-decoration:none;font:700 .72rem/1 var(--mono);transition:.2s}
+.lang a:hover{color:var(--text);border-color:var(--c1);box-shadow:0 0 12px rgba(124,245,255,.35)}
+.lang a[aria-current]{color:var(--bg);background:var(--grad);border-color:transparent}
 header nav{order:3;width:100%}
 /* szerokie tabele przewijają się w karcie zamiast poszerzać stronę na telefonie */
 .card:has(>table){overflow-x:auto}
