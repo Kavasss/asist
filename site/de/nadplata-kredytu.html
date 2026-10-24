@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sondertilgungsrechner Polen — wie viel Zinsen Sie sparen</title>
+<meta name="description" content="Sehen Sie, wie viel Sie mit Sondertilgungen bei Hypothek oder Ratenkredit in Polen sparen: kürzere Laufzeit oder niedrigere Rate. Einmalig und monatlich.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/site.js" defer></script>
+<script src="../assets/partners.js" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://kavasss.github.io/asist/de/nadplata-kredytu.html">
+<link rel="alternate" hreflang="pl" href="https://kavasss.github.io/asist/nadplata-kredytu.html">
+<link rel="alternate" hreflang="en" href="https://kavasss.github.io/asist/en/nadplata-kredytu.html">
+<link rel="alternate" hreflang="uk" href="https://kavasss.github.io/asist/uk/nadplata-kredytu.html">
+<link rel="alternate" hreflang="ru" href="https://kavasss.github.io/asist/ru/nadplata-kredytu.html">
+<link rel="alternate" hreflang="de" href="https://kavasss.github.io/asist/de/nadplata-kredytu.html">
+<link rel="alternate" hreflang="x-default" href="https://kavasss.github.io/asist/nadplata-kredytu.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Zinseszins</a><a href="kalkulator-kredytu.html">Kredit</a><a href="nadplata-kredytu.html">Sondertilgung</a><a href="lokata.html">Festgeld</a><a href="obligacje-skarbowe.html">Staatsanleihen</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Passives Einkommen</a><a href="kalkulator-wynagrodzen.html">Gehalt</a><a href="kalkulator-b2b.html">B2B / JDG</a></nav>
+<!--i18n--><div class="lang"><a href="../nadplata-kredytu.html" hreflang="pl">PL</a><a href="../en/nadplata-kredytu.html" hreflang="en">EN</a><a href="../uk/nadplata-kredytu.html" hreflang="uk">UA</a><a href="../ru/nadplata-kredytu.html" hreflang="ru">RU</a><a href="../de/nadplata-kredytu.html" hreflang="de" aria-current="true">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Sondertilgungsrechner</h1>
+<div class="card grid">
+<label>Restschuld, PLN<input id="s" type="number" value="400000"></label>
+<label>Zinssatz, % pro Jahr<input id="r" type="number" value="7" step="0.01"></label>
+<label>Restlaufzeit, Monate<input id="n" type="number" value="300"></label>
+<label>Einmalige Sondertilgung jetzt, PLN<input id="o" type="number" value="20000"></label>
+<label>Monatliche Sondertilgung, PLN<input id="m" type="number" value="500"></label>
+<label>Wirkung der Sondertilgung<select id="e"><option value="1">Kürzere Laufzeit</option><option value="0">Niedrigere Rate</option></select></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="kredyt"></div>
+<h2>Kürzere Laufzeit oder niedrigere Rate?</h2>
+<p>Eine kürzere Laufzeit spart fast immer mehr Zinsen, weil die Rate gleich bleibt und die Restschuld schneller sinkt. Eine niedrigere Rate entlastet das Monatsbudget und verbessert die Liquidität — sinnvoll, wenn das Haushaltsbudget knapp ist oder Sie einen Puffer für unerwartete Ausgaben möchten.</p>
+<h2>Darf die Bank eine Gebühr verlangen?</h2>
+<p>Nach polnischem Recht darf die Bank bei einer Hypothek mit variablem Zins nur in den ersten 3 Jahren eine Gebühr für Sondertilgungen verlangen, danach sind sie kostenlos. Bei Ratenkrediten mit variablem Zins ist die Sondertilgung kostenlos, bei festem Zins ist die Gebühr gesetzlich begrenzt. Details stehen in Ihrem Kreditvertrag.</p>
+<h2>Kredit tilgen oder investieren?</h2>
+<p>Eine Sondertilgung „bringt“ den Kreditzins — ohne Risiko und ohne Belka-Steuer. Kostet Ihr Kredit 7 % und bringen Festgeld oder Anleihen 4–5 % vor Steuern, gewinnt meist die Sondertilgung. Legen Sie vorher einen Notgroschen für 3–6 Monatsausgaben an.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["s","r","n","o","m","e"],()=>{
+  const S=num("s"),i=num("r")/100/12,N=Math.max(1,Math.round(num("n"))),M=Math.max(0,num("m")),shorten=num("e")===1;
+  const annuity=(P,k)=>k<=0?P:i?P*i/(1-Math.pow(1+i,-k)):P/k;
+  const base=annuity(S,N),baseInt=base*N-S;
+  let P=Math.max(0,S-Math.max(0,num("o"))),rate=annuity(P,N),interest=0,months=0,first=rate;
+  while(P>0.01&&months<N){
+    const int=P*i;interest+=int;months++;
+    P=P+int-Math.min(rate,P+int);
+    if(P>0){P=Math.max(0,P-M);if(!shorten&&P>0)rate=annuity(P,N-months);}
+  }
+  const saved=baseInt-interest;
+  out.innerHTML=`Zinsersparnis: <b>${fmt(saved)}</b><br>${shorten?`Sie sind ${N-months} Monate früher schuldenfrei (${((N-months)/12).toFixed(1).replace(".",",")} Jahre).`:`Neue Rate nach der Einmaltilgung: ${fmt(first)} statt ${fmt(base)}.`}`;
+  tbl.innerHTML=[["Rate ohne Sondertilgung",base],["Zinsen ohne Sondertilgung",baseInt],["Zinsen mit Sondertilgung",interest],["Anzahl Raten mit Sondertilgung",months]].map((x,k)=>`<tr><td>${x[0]}</td><td>${k===3?x[1]:fmt(x[1])}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Die Berechnungen dienen nur zur Orientierung und sind keine Finanz- oder Anlageberatung. Berechnet nach polnischen Regeln in Złoty (PLN). Diese Seite enthält Partnerlinks. © FinKalk</footer>
+</body>
+</html>

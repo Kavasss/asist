@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Loan Overpayment Calculator Poland — How Much Interest You Save</title>
+<meta name="description" content="See how much you save by overpaying a mortgage or cash loan in Poland: shorter term or lower payment. One-off and monthly overpayments.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/site.js" defer></script>
+<script src="../assets/partners.js" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://kavasss.github.io/asist/en/nadplata-kredytu.html">
+<link rel="alternate" hreflang="pl" href="https://kavasss.github.io/asist/nadplata-kredytu.html">
+<link rel="alternate" hreflang="en" href="https://kavasss.github.io/asist/en/nadplata-kredytu.html">
+<link rel="alternate" hreflang="uk" href="https://kavasss.github.io/asist/uk/nadplata-kredytu.html">
+<link rel="alternate" hreflang="ru" href="https://kavasss.github.io/asist/ru/nadplata-kredytu.html">
+<link rel="alternate" hreflang="de" href="https://kavasss.github.io/asist/de/nadplata-kredytu.html">
+<link rel="alternate" hreflang="x-default" href="https://kavasss.github.io/asist/nadplata-kredytu.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Compound interest</a><a href="kalkulator-kredytu.html">Loan</a><a href="nadplata-kredytu.html">Loan overpayment</a><a href="lokata.html">Deposit</a><a href="obligacje-skarbowe.html">Bonds</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Passive income</a><a href="kalkulator-wynagrodzen.html">Salary</a><a href="kalkulator-b2b.html">B2B / JDG</a></nav>
+<!--i18n--><div class="lang"><a href="../nadplata-kredytu.html" hreflang="pl">PL</a><a href="../en/nadplata-kredytu.html" hreflang="en" aria-current="true">EN</a><a href="../uk/nadplata-kredytu.html" hreflang="uk">UA</a><a href="../ru/nadplata-kredytu.html" hreflang="ru">RU</a><a href="../de/nadplata-kredytu.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Loan overpayment calculator</h1>
+<div class="card grid">
+<label>Remaining balance, PLN<input id="s" type="number" value="400000"></label>
+<label>Interest rate, % per year<input id="r" type="number" value="7" step="0.01"></label>
+<label>Remaining term, months<input id="n" type="number" value="300"></label>
+<label>One-off overpayment now, PLN<input id="o" type="number" value="20000"></label>
+<label>Monthly overpayment, PLN<input id="m" type="number" value="500"></label>
+<label>Overpayment effect<select id="e"><option value="1">Shorter term</option><option value="0">Lower payment</option></select></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="kredyt"></div>
+<h2>Shorter term or lower payment?</h2>
+<p>Shortening the loan term almost always saves more interest, because the payment stays the same and the principal falls faster. Lowering the payment reduces your monthly burden and improves cash flow — a good choice when your household budget is tight or you want a buffer for unexpected expenses.</p>
+<h2>Can the bank charge a fee?</h2>
+<p>Under Polish law, on a variable-rate mortgage the bank may charge an overpayment fee only in the first 3 years; after that overpaying is free. On a variable-rate cash loan overpaying is free, and on a fixed-rate one the fee is capped by law. Check your loan agreement for details.</p>
+<h2>Overpay the loan or invest?</h2>
+<p>Overpaying “earns” you the loan’s interest rate — risk-free and with no Belka tax. If your loan costs 7% and deposits or bonds pay 4–5% before tax, overpaying usually wins. Before you overpay, build an emergency fund covering 3–6 months of expenses.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["s","r","n","o","m","e"],()=>{
+  const S=num("s"),i=num("r")/100/12,N=Math.max(1,Math.round(num("n"))),M=Math.max(0,num("m")),shorten=num("e")===1;
+  const annuity=(P,k)=>k<=0?P:i?P*i/(1-Math.pow(1+i,-k)):P/k;
+  const base=annuity(S,N),baseInt=base*N-S;
+  let P=Math.max(0,S-Math.max(0,num("o"))),rate=annuity(P,N),interest=0,months=0,first=rate;
+  while(P>0.01&&months<N){
+    const int=P*i;interest+=int;months++;
+    P=P+int-Math.min(rate,P+int);
+    if(P>0){P=Math.max(0,P-M);if(!shorten&&P>0)rate=annuity(P,N-months);}
+  }
+  const saved=baseInt-interest;
+  out.innerHTML=`Interest saved: <b>${fmt(saved)}</b><br>${shorten?`You pay off the loan ${N-months} months earlier (${((N-months)/12).toFixed(1)} years).`:`New payment after the one-off overpayment: ${fmt(first)} instead of ${fmt(base)}.`}`;
+  tbl.innerHTML=[["Payment without overpayment",base],["Interest without overpayment",baseInt],["Interest with overpayment",interest],["Number of payments with overpayment",months]].map((x,k)=>`<tr><td>${x[0]}</td><td>${k===3?x[1]:fmt(x[1])}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Calculations are for illustration only and are not financial advice or an investment recommendation. Calculations follow Polish rules and use Polish złoty (PLN). This site contains affiliate links. © FinKalk</footer>
+</body>
+</html>

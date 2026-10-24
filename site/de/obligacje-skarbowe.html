@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rechner polnische Staatsanleihen 2026 — EDO, COI, TOS, ROR</title>
+<meta name="description" content="Vergleichen Sie die Rendite polnischer Sparanleihen EDO, COI, TOS und ROR nach 19 % Belka-Steuer. Angebot Oktober 2026, eigenes Inflationsszenario.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/site.js" defer></script>
+<script src="../assets/partners.js" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://kavasss.github.io/asist/de/obligacje-skarbowe.html">
+<link rel="alternate" hreflang="pl" href="https://kavasss.github.io/asist/obligacje-skarbowe.html">
+<link rel="alternate" hreflang="en" href="https://kavasss.github.io/asist/en/obligacje-skarbowe.html">
+<link rel="alternate" hreflang="uk" href="https://kavasss.github.io/asist/uk/obligacje-skarbowe.html">
+<link rel="alternate" hreflang="ru" href="https://kavasss.github.io/asist/ru/obligacje-skarbowe.html">
+<link rel="alternate" hreflang="de" href="https://kavasss.github.io/asist/de/obligacje-skarbowe.html">
+<link rel="alternate" hreflang="x-default" href="https://kavasss.github.io/asist/obligacje-skarbowe.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Zinseszins</a><a href="kalkulator-kredytu.html">Kredit</a><a href="nadplata-kredytu.html">Sondertilgung</a><a href="lokata.html">Festgeld</a><a href="obligacje-skarbowe.html">Staatsanleihen</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Passives Einkommen</a><a href="kalkulator-wynagrodzen.html">Gehalt</a><a href="kalkulator-b2b.html">B2B / JDG</a></nav>
+<!--i18n--><div class="lang"><a href="../obligacje-skarbowe.html" hreflang="pl">PL</a><a href="../en/obligacje-skarbowe.html" hreflang="en">EN</a><a href="../uk/obligacje-skarbowe.html" hreflang="uk">UA</a><a href="../ru/obligacje-skarbowe.html" hreflang="ru">RU</a><a href="../de/obligacje-skarbowe.html" hreflang="de" aria-current="true">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Rechner für polnische Staatsanleihen 2026</h1>
+<p>Prüfen Sie, wie viel Sie mit polnischen Staatssparanleihen nach der Belka-Steuer verdienen und ob Sie die Inflation schlagen. Kaufen kann sie jeder mit polnischer PESEL-Nummer und Konto bei PKO BP oder Pekao.</p>
+<div class="card grid">
+<label>Anlagebetrag, PLN<input id="k" type="number" value="10000" step="100"></label>
+<label>Erwartete Inflation, % pro Jahr<input id="inf" type="number" value="3.5" step="0.1"></label>
+<label>NBP-Referenzzins, %<input id="nbp" type="number" value="3.75" step="0.25"></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="invest"></div>
+<h2>Anleihezinsen — Oktober 2026</h2>
+<p>Das Angebot des Finanzministeriums für Oktober 2026 ist seit April unverändert. Eine Anleihe kostet 100 PLN.</p>
+<div class="card"><table>
+<tr><th>Anleihe</th><th>Laufzeit</th><th>1. Periode</th><th>Folgeperioden</th></tr>
+<tr><td>ROR</td><td>1 Jahr</td><td>4,00 %</td><td>NBP-Referenzzins, monatlich</td></tr>
+<tr><td>DOR</td><td>2 Jahre</td><td>4,15 %</td><td>NBP-Referenzzins + 0,15 Pp.</td></tr>
+<tr><td>TOS</td><td>3 Jahre</td><td>4,40 %</td><td>fest 4,40 %</td></tr>
+<tr><td>COI</td><td>4 Jahre</td><td>4,75 %</td><td>Inflation + 1,50 Pp.</td></tr>
+<tr><td>EDO</td><td>10 Jahre</td><td>5,35 %</td><td>Inflation + 2,00 Pp.</td></tr>
+</table></div>
+<h2>Welche Anleihen wählen?</h2>
+<p><b>EDO</b> (10 Jahre) kapitalisieren die Zinsen jährlich und sind inflationsgeschützt — die beste Wahl für lange Zeiträume, besonders in einem IKE-Konto ohne Belka-Steuer. <b>COI</b> (4 Jahre) zahlen die Zinsen jährlich aus und eignen sich für regelmäßiges passives Einkommen. <b>TOS</b> bieten einen festen Zins für 3 Jahre — lohnend, wenn Sie sinkende Inflation und Zinsen erwarten. <b>ROR</b> sind kurzfristig, ihr Zins folgt den Entscheidungen der Zentralbank.</p>
+<p>Anleihen können gegen eine kleine Gebühr (meist 0,50–3 PLN pro Stück) vorzeitig zurückgegeben werden; sie übersteigt nie die aufgelaufenen Zinsen. Kaufen können Sie sie auf obligacjeskarbowe.pl, bei der PKO BP oder der Bank Pekao.</p>
+<h2>So rechnen wir</h2>
+<p>Bei EDO und TOS werden die Zinsen jährlich kapitalisiert, die 19 % Steuer wird bei Rückzahlung abgezogen. COI zahlen die Zinsen jährlich aus (sofort versteuert, ohne Kapitalisierung). Für ROR nehmen wir 4,00 % im ersten Monat und danach den NBP-Zins mit monatlicher Auszahlung an. „Real“ bedeutet den Ertrag nach Abzug der eingegebenen Inflation. Die Ergebnisse für COI und EDO sind Schätzungen — sie hängen von der tatsächlichen Inflation ab.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["k","inf","nbp"],()=>{
+  const K=Math.floor(num("k")/100)*100,inf=num("inf")/100,nbp=num("nbp")/100,T=0.19;
+  const rate=(first,next,y)=>y===0?first:Math.max(0,next);
+  const capitalized=(first,next,n)=>{let v=K;for(let y=0;y<n;y++)v*=1+rate(first,next,y);return K+(v-K)*(1-T);};
+  const paidOut=(first,next,n)=>{let s=K;for(let y=0;y<n;y++)s+=K*rate(first,next,y)*(1-T);return s;};
+  const ror=K+K*((0.04+11*nbp)/12)*(1-T);
+  const rows=[
+    ["ROR",1,ror],
+    ["DOR",2,K+K*(((0.0415+11*(nbp+0.0015))/12)+(nbp+0.0015))*(1-T)],
+    ["TOS",3,capitalized(0.044,0.044,3)],
+    ["COI",4,paidOut(0.0475,inf+0.015,4)],
+    ["EDO",10,capitalized(0.0535,inf+0.02,10)],
+  ].map(([n,y,v])=>({n,y,v,a:Math.pow(v/K,1/y)-1}));
+  const best=rows.reduce((a,b)=>b.a>a.a?b:a);
+  const pct=(x)=>(x*100).toFixed(2).replace(".",",")+"%";
+  out.innerHTML=K?`Höchste Nettorendite pro Jahr: <b>${best.n} — ${pct(best.a)}</b><br>Für ${fmt(K)} kaufen Sie ${K/100} Anleihen zu je 100 PLN.`:"Betrag eingeben (mind. 100 PLN).";
+  tbl.innerHTML=`<tr><th>Anleihe</th><th>Laufzeit</th><th>Nettowert</th><th>Nettoertrag</th><th>Netto / Jahr</th><th>Real / Jahr</th></tr>`+
+    rows.map(r=>`<tr><td>${r.n}</td><td>${r.y} ${r.y===1?"Jahr":"Jahre"}</td><td>${fmt(r.v)}</td><td>${fmt(r.v-K)}</td><td>${pct(r.a)}</td><td>${pct((1+r.a)/(1+inf)-1)}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Die Berechnungen dienen nur zur Orientierung und sind keine Finanz- oder Anlageberatung. Berechnet nach polnischen Regeln in Złoty (PLN). Diese Seite enthält Partnerlinks. © FinKalk</footer>
+</body>
+</html>

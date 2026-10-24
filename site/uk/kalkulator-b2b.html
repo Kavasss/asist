@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Калькулятор B2B у Польщі — скільки лишається ФОП (JDG)</title>
+<meta name="description" content="Порівняйте форми оподаткування бізнесу в Польщі: шкала, лінійний податок 19% і ryczałt. Дізнайтеся, скільки лишається на руки на B2B.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/site.js" defer></script>
+<script src="../assets/partners.js" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://kavasss.github.io/asist/uk/kalkulator-b2b.html">
+<link rel="alternate" hreflang="pl" href="https://kavasss.github.io/asist/kalkulator-b2b.html">
+<link rel="alternate" hreflang="en" href="https://kavasss.github.io/asist/en/kalkulator-b2b.html">
+<link rel="alternate" hreflang="uk" href="https://kavasss.github.io/asist/uk/kalkulator-b2b.html">
+<link rel="alternate" hreflang="ru" href="https://kavasss.github.io/asist/ru/kalkulator-b2b.html">
+<link rel="alternate" hreflang="de" href="https://kavasss.github.io/asist/de/kalkulator-b2b.html">
+<link rel="alternate" hreflang="x-default" href="https://kavasss.github.io/asist/kalkulator-b2b.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Складні відсотки</a><a href="kalkulator-kredytu.html">Кредит</a><a href="nadplata-kredytu.html">Переплата кредиту</a><a href="lokata.html">Депозит</a><a href="obligacje-skarbowe.html">Облігації</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Пасивний дохід</a><a href="kalkulator-wynagrodzen.html">Зарплата</a><a href="kalkulator-b2b.html">B2B / ФОП</a></nav>
+<!--i18n--><div class="lang"><a href="../kalkulator-b2b.html" hreflang="pl">PL</a><a href="../en/kalkulator-b2b.html" hreflang="en">EN</a><a href="../uk/kalkulator-b2b.html" hreflang="uk" aria-current="true">UA</a><a href="../ru/kalkulator-b2b.html" hreflang="ru">RU</a><a href="../de/kalkulator-b2b.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Калькулятор B2B — скільки лишається на руки</h1>
+<div class="card grid">
+<label>Виручка (рахунок без ПДВ), zł / міс.<input id="p" type="number" value="15000"></label>
+<label>Витрати бізнесу, zł / міс.<input id="c" type="number" value="500"></label>
+<label>Соціальні внески ZUS, zł / міс.<input id="s" type="number" value="1926.76" step="0.01"></label>
+<label>Ставка ryczałt<select id="rr"><option value="0.12">12% (напр. IT-послуги)</option><option value="0.085">8,5%</option><option value="0.15">15%</option><option value="0.055">5,5%</option><option value="0.03">3%</option></select></label>
+<label>Медичний внесок на ryczałt, zł / міс.<input id="zr" type="number" value="769.43" step="0.01"></label>
+</div>
+<p><small>Внески ZUS залежать від вашої ситуації: ulga na start (перші 6 міс.) — 0 zł, потім 2 роки пільговий ZUS, далі повний ZUS. Значення за замовчуванням — приклад, актуальні ставки перевірте на <a href="https://www.zus.pl" target="_blank" rel="noopener">zus.pl</a>. Медичний внесок на ryczałt залежить від річної виручки (до 60 тис., 60–300 тис., понад 300 тис. zł).</small></p>
+<div class="card"><table id="tbl"></table></div>
+<div class="card result" id="out"></div>
+<div data-partners="firma"></div>
+<h2>Яка форма оподаткування вигідніша?</h2>
+<p><b>Шкала</b> (12% / 32%) з неоподатковуваною сумою 30 000 zł вигідна при нижчих доходах. <b>Лінійний податок</b> (19%) зазвичай вигідний при високих доходах і великих витратах. <b>Ryczałt</b> рахується від виручки без віднімання витрат — добрий вибір, коли витрати малі, наприклад в IT.</p>
+<p>Розрахунок спрощений: ми не враховуємо віднімання частини медичного внеску від доходу/виручки, мінімального медичного внеску, пільг і спільного декларування з подружжям. Перед вибором форми оподаткування проконсультуйтеся з бухгалтером.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["p","c","s","rr","zr"],()=>{
+  const P=num("p"),C=num("c"),S=num("s");
+  const inc=Math.max(0,P-C-S), y=inc*12;
+  // skala: roczny podatek 12% do 120 tys., 32% powyżej, minus 3600 zł
+  const pitSkala=Math.max(0,(y<=120000?y*0.12:10800+(y-120000)*0.32)-3600)/12, zdrSkala=inc*0.09;
+  const pitLin=inc*0.19, zdrLin=inc*0.049;
+  const pitRycz=Math.max(0,P-S)*num("rr"), zdrRycz=num("zr");
+  const rows=[["Шкала",pitSkala,zdrSkala,P-C-S-pitSkala-zdrSkala],["Лінійний податок 19%",pitLin,zdrLin,P-C-S-pitLin-zdrLin],["Ryczałt",pitRycz,zdrRycz,P-C-S-pitRycz-zdrRycz]];
+  tbl.innerHTML="<tr><th>Форма</th><th>PIT</th><th>Медичний</th><th>На руки</th></tr>"+rows.map(r=>`<tr><td>${r[0]}</td><td>${fmt(r[1])}</td><td>${fmt(r[2])}</td><td><b>${fmt(r[3])}</b></td></tr>`).join("");
+  const best=rows.reduce((a,b)=>b[3]>a[3]?b:a);
+  out.innerHTML=`Найвигідніше: <b>${best[0]}</b><br>На руки: ${fmt(best[3])} / міс. (після ZUS ${fmt(S)} і витрат)`;
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Розрахунки мають ознайомчий характер і не є фінансовою порадою чи інвестиційною рекомендацією. Розрахунки за польськими правилами, у злотих (PLN). Сайт містить партнерські посилання. © FinKalk</footer>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Polish Treasury Bonds Calculator 2026 — EDO, COI, TOS, ROR</title>
+<meta name="description" content="Compare returns on Polish savings bonds EDO, COI, TOS and ROR after the 19% Belka tax. October 2026 offer, your own inflation scenario.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/site.js" defer></script>
+<script src="../assets/partners.js" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://kavasss.github.io/asist/en/obligacje-skarbowe.html">
+<link rel="alternate" hreflang="pl" href="https://kavasss.github.io/asist/obligacje-skarbowe.html">
+<link rel="alternate" hreflang="en" href="https://kavasss.github.io/asist/en/obligacje-skarbowe.html">
+<link rel="alternate" hreflang="uk" href="https://kavasss.github.io/asist/uk/obligacje-skarbowe.html">
+<link rel="alternate" hreflang="ru" href="https://kavasss.github.io/asist/ru/obligacje-skarbowe.html">
+<link rel="alternate" hreflang="de" href="https://kavasss.github.io/asist/de/obligacje-skarbowe.html">
+<link rel="alternate" hreflang="x-default" href="https://kavasss.github.io/asist/obligacje-skarbowe.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Compound interest</a><a href="kalkulator-kredytu.html">Loan</a><a href="nadplata-kredytu.html">Loan overpayment</a><a href="lokata.html">Deposit</a><a href="obligacje-skarbowe.html">Bonds</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Passive income</a><a href="kalkulator-wynagrodzen.html">Salary</a><a href="kalkulator-b2b.html">B2B / JDG</a></nav>
+<!--i18n--><div class="lang"><a href="../obligacje-skarbowe.html" hreflang="pl">PL</a><a href="../en/obligacje-skarbowe.html" hreflang="en" aria-current="true">EN</a><a href="../uk/obligacje-skarbowe.html" hreflang="uk">UA</a><a href="../ru/obligacje-skarbowe.html" hreflang="ru">RU</a><a href="../de/obligacje-skarbowe.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Polish treasury bonds calculator 2026</h1>
+<p>See how much you earn on Polish government savings bonds after the 19% Belka tax and whether you beat inflation. Anyone with a Polish PESEL number and a bank account in PKO BP or Pekao can buy them.</p>
+<div class="card grid">
+<label>Amount to invest, PLN<input id="k" type="number" value="10000" step="100"></label>
+<label>Expected inflation, % per year<input id="inf" type="number" value="3.5" step="0.1"></label>
+<label>NBP reference rate, %<input id="nbp" type="number" value="3.75" step="0.25"></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="invest"></div>
+<h2>Bond interest rates — October 2026</h2>
+<p>The Ministry of Finance offer for October 2026 is unchanged since April. One bond costs 100 PLN.</p>
+<div class="card"><table>
+<tr><th>Bond</th><th>Term</th><th>1st period</th><th>Following periods</th></tr>
+<tr><td>ROR</td><td>1 year</td><td>4.00%</td><td>NBP ref. rate, monthly</td></tr>
+<tr><td>DOR</td><td>2 years</td><td>4.15%</td><td>NBP ref. rate + 0.15 pp</td></tr>
+<tr><td>TOS</td><td>3 years</td><td>4.40%</td><td>fixed 4.40%</td></tr>
+<tr><td>COI</td><td>4 years</td><td>4.75%</td><td>inflation + 1.50 pp</td></tr>
+<tr><td>EDO</td><td>10 years</td><td>5.35%</td><td>inflation + 2.00 pp</td></tr>
+</table></div>
+<h2>Which bonds to choose?</h2>
+<p><b>EDO</b> (10-year) bonds compound interest every year and are protected against inflation — the best choice for the long term, especially inside an IKE account where you pay no Belka tax. <b>COI</b> (4-year) bonds pay out interest every year, so they suit people who want regular passive income. <b>TOS</b> give a fixed rate for 3 years — worth it if you expect inflation and interest rates to fall. <b>ROR</b> are short-term, with a rate that follows the central bank’s decisions.</p>
+<p>Bonds can be redeemed early for a small fee (usually 0.50–3 PLN per bond), which can never exceed the interest earned. You can buy them at obligacjeskarbowe.pl, in PKO BP or Bank Pekao.</p>
+<h2>How we calculate</h2>
+<p>For EDO and TOS interest is compounded every year and the 19% tax is taken at redemption. COI pay out interest every year (taxed as it is paid, no compounding). For ROR we assume 4.00% in the first month and the NBP rate afterwards, with monthly payouts. “Real” means the return after subtracting the inflation you entered. COI and EDO results are estimates — they depend on actual inflation.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["k","inf","nbp"],()=>{
+  const K=Math.floor(num("k")/100)*100,inf=num("inf")/100,nbp=num("nbp")/100,T=0.19;
+  const rate=(first,next,y)=>y===0?first:Math.max(0,next);
+  const capitalized=(first,next,n)=>{let v=K;for(let y=0;y<n;y++)v*=1+rate(first,next,y);return K+(v-K)*(1-T);};
+  const paidOut=(first,next,n)=>{let s=K;for(let y=0;y<n;y++)s+=K*rate(first,next,y)*(1-T);return s;};
+  const ror=K+K*((0.04+11*nbp)/12)*(1-T);
+  const rows=[
+    ["ROR",1,ror],
+    ["DOR",2,K+K*(((0.0415+11*(nbp+0.0015))/12)+(nbp+0.0015))*(1-T)],
+    ["TOS",3,capitalized(0.044,0.044,3)],
+    ["COI",4,paidOut(0.0475,inf+0.015,4)],
+    ["EDO",10,capitalized(0.0535,inf+0.02,10)],
+  ].map(([n,y,v])=>({n,y,v,a:Math.pow(v/K,1/y)-1}));
+  const best=rows.reduce((a,b)=>b.a>a.a?b:a);
+  const pct=(x)=>(x*100).toFixed(2).replace(".",",")+"%";
+  out.innerHTML=K?`Highest net annual return: <b>${best.n} — ${pct(best.a)}</b><br>For ${fmt(K)} you buy ${K/100} bonds at 100 PLN each.`:"Enter an amount (min. 100 PLN).";
+  tbl.innerHTML=`<tr><th>Bond</th><th>Term</th><th>Net value</th><th>Net gain</th><th>Net / year</th><th>Real / year</th></tr>`+
+    rows.map(r=>`<tr><td>${r.n}</td><td>${r.y} ${r.y===1?"year":"years"}</td><td>${fmt(r.v)}</td><td>${fmt(r.v-K)}</td><td>${pct(r.a)}</td><td>${pct((1+r.a)/(1+inf)-1)}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Calculations are for illustration only and are not financial advice or an investment recommendation. Calculations follow Polish rules and use Polish złoty (PLN). This site contains affiliate links. © FinKalk</footer>
+</body>
+</html>

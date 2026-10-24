@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IKZE Calculator 2026 — Polish Retirement Account Tax Refund</title>
+<meta name="description" content="Calculate the tax refund for IKZE contributions in 2026 (limit 11,304 PLN, 16,956 PLN for the self-employed) and how much you gain at retirement versus a regular account.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/site.js" defer></script>
+<script src="../assets/partners.js" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://kavasss.github.io/asist/en/kalkulator-ikze.html">
+<link rel="alternate" hreflang="pl" href="https://kavasss.github.io/asist/kalkulator-ikze.html">
+<link rel="alternate" hreflang="en" href="https://kavasss.github.io/asist/en/kalkulator-ikze.html">
+<link rel="alternate" hreflang="uk" href="https://kavasss.github.io/asist/uk/kalkulator-ikze.html">
+<link rel="alternate" hreflang="ru" href="https://kavasss.github.io/asist/ru/kalkulator-ikze.html">
+<link rel="alternate" hreflang="de" href="https://kavasss.github.io/asist/de/kalkulator-ikze.html">
+<link rel="alternate" hreflang="x-default" href="https://kavasss.github.io/asist/kalkulator-ikze.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Compound interest</a><a href="kalkulator-kredytu.html">Loan</a><a href="nadplata-kredytu.html">Loan overpayment</a><a href="lokata.html">Deposit</a><a href="obligacje-skarbowe.html">Bonds</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Passive income</a><a href="kalkulator-wynagrodzen.html">Salary</a><a href="kalkulator-b2b.html">B2B / JDG</a></nav>
+<!--i18n--><div class="lang"><a href="../kalkulator-ikze.html" hreflang="pl">PL</a><a href="../en/kalkulator-ikze.html" hreflang="en" aria-current="true">EN</a><a href="../uk/kalkulator-ikze.html" hreflang="uk">UA</a><a href="../ru/kalkulator-ikze.html" hreflang="ru">RU</a><a href="../de/kalkulator-ikze.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>IKZE calculator 2026 — how much tax you get back</h1>
+<div class="card grid">
+<label>Yearly IKZE contribution, PLN<input id="w" type="number" value="11304" step="100"></label>
+<label>How you are taxed<select id="t"><option value="0.12">Tax scale — 12% bracket</option><option value="0.32">Tax scale — 32% bracket</option><option value="0.19">Flat tax 19%</option></select></label>
+<label>Self-employed (JDG)?<select id="j"><option value="0">No — limit 11,304 PLN</option><option value="1">Yes — limit 16,956 PLN</option></select></label>
+<label>Years to retirement (payout after age 65)<input id="n" type="number" value="25"></label>
+<label>Average investment return, % per year<input id="r" type="number" value="6" step="0.1"></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="invest"></div>
+<h2>How the IKZE tax relief works</h2>
+<p>IKZE (Individual Retirement Security Account) contributions are deducted from your income in the annual Polish PIT return. Your refund equals the contribution multiplied by your tax rate: 12% or 32% on the tax scale, 19% on flat tax. On lump-sum tax (ryczałt) the contribution is deducted from revenue, so the refund depends on your ryczałt rate. In 2026 you can pay in up to <b>11,304 PLN</b>, or <b>16,956 PLN</b> if you run a business.</p>
+<p>Gains inside an IKZE are free of the Belka tax. When you withdraw after age 65 you pay only a flat 10% tax on the whole amount. If you withdraw earlier, the money is added to your income and taxed at your normal rate.</p>
+<h2>IKZE or IKE?</h2>
+<p>IKZE gives you a benefit right away — a tax refund every year. IKE (limit 28,260 PLN in 2026) gives no relief on contributions, but withdrawals after age 60 are completely tax-free. Those who gain most have both accounts: fill the IKZE limit first, then put the rest into IKE. Both accounts can hold e.g. EDO treasury bonds, ETFs or funds.</p>
+<h2>How we calculate</h2>
+<p>We assume the same amount is paid in at the start of each year at the average return you entered. Tax refunds are treated as cash (not reinvested). For comparison we calculate a regular brokerage account with the same contributions and 19% Belka tax on gains at withdrawal.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["w","t","j","n","r"],()=>{
+  const lim=num("j")?16956:11304,W=Math.min(Math.max(0,num("w")),lim),t=num("t"),n=Math.max(1,Math.round(num("n"))),r=num("r")/100;
+  let v=0;for(let y=0;y<n;y++)v=(v+W)*(1+r);
+  const paid=W*n,refund=W*t,ikze=v*0.9+refund*n,normal=v-Math.max(0,v-paid)*0.19;
+  out.innerHTML=`Tax refund per year: <b>${fmt(refund)}</b>${num("w")>lim?"<br><small>Contribution capped at the ${fmt(lim)} limit.</small>":""}<br>IKZE advantage over a regular account after ${n} years: <b>${fmt(ikze-normal)}</b>`;
+  tbl.innerHTML=[["Total paid in",paid],["Account value at retirement",v],["IKZE after 10% tax",v*0.9],["Total tax refunds",refund*n],["IKZE in total",ikze],["Regular account after Belka tax",normal]].map(x=>`<tr><td>${x[0]}</td><td>${fmt(x[1])}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Calculations are for illustration only and are not financial advice or an investment recommendation. Calculations follow Polish rules and use Polish złoty (PLN). This site contains affiliate links. © FinKalk</footer>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IKZE-Rechner 2026 — Steuererstattung für das polnische Vorsorgekonto</title>
+<meta name="description" content="Berechnen Sie die Steuererstattung für IKZE-Einzahlungen 2026 (Limit 11.304 PLN, für Selbstständige 16.956 PLN) und Ihren Vorteil im Ruhestand gegenüber einem normalen Konto.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/site.js" defer></script>
+<script src="../assets/partners.js" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://kavasss.github.io/asist/de/kalkulator-ikze.html">
+<link rel="alternate" hreflang="pl" href="https://kavasss.github.io/asist/kalkulator-ikze.html">
+<link rel="alternate" hreflang="en" href="https://kavasss.github.io/asist/en/kalkulator-ikze.html">
+<link rel="alternate" hreflang="uk" href="https://kavasss.github.io/asist/uk/kalkulator-ikze.html">
+<link rel="alternate" hreflang="ru" href="https://kavasss.github.io/asist/ru/kalkulator-ikze.html">
+<link rel="alternate" hreflang="de" href="https://kavasss.github.io/asist/de/kalkulator-ikze.html">
+<link rel="alternate" hreflang="x-default" href="https://kavasss.github.io/asist/kalkulator-ikze.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Zinseszins</a><a href="kalkulator-kredytu.html">Kredit</a><a href="nadplata-kredytu.html">Sondertilgung</a><a href="lokata.html">Festgeld</a><a href="obligacje-skarbowe.html">Staatsanleihen</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Passives Einkommen</a><a href="kalkulator-wynagrodzen.html">Gehalt</a><a href="kalkulator-b2b.html">B2B / JDG</a></nav>
+<!--i18n--><div class="lang"><a href="../kalkulator-ikze.html" hreflang="pl">PL</a><a href="../en/kalkulator-ikze.html" hreflang="en">EN</a><a href="../uk/kalkulator-ikze.html" hreflang="uk">UA</a><a href="../ru/kalkulator-ikze.html" hreflang="ru">RU</a><a href="../de/kalkulator-ikze.html" hreflang="de" aria-current="true">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>IKZE-Rechner 2026 — wie viel Steuer Sie zurückbekommen</h1>
+<div class="card grid">
+<label>Jährliche IKZE-Einzahlung, PLN<input id="w" type="number" value="11304" step="100"></label>
+<label>Besteuerungsform<select id="t"><option value="0.12">Steuertabelle — 12-%-Stufe</option><option value="0.32">Steuertabelle — 32-%-Stufe</option><option value="0.19">Lineare Steuer 19 %</option></select></label>
+<label>Selbstständig (JDG)?<select id="j"><option value="0">Nein — Limit 11.304 PLN</option><option value="1">Ja — Limit 16.956 PLN</option></select></label>
+<label>Jahre bis zur Rente (Auszahlung ab 65)<input id="n" type="number" value="25"></label>
+<label>Durchschnittliche Rendite, % pro Jahr<input id="r" type="number" value="6" step="0.1"></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="invest"></div>
+<h2>So funktioniert die IKZE-Steuervergünstigung</h2>
+<p>Einzahlungen auf das IKZE (individuelles Altersvorsorgekonto) ziehen Sie in der jährlichen polnischen Steuererklärung PIT vom Einkommen ab. Die Erstattung entspricht der Einzahlung mal Ihrem Steuersatz: 12 % oder 32 % nach Tabelle, 19 % bei linearer Steuer. Bei Pauschalsteuer (ryczałt) wird vom Umsatz abgezogen, die Erstattung hängt also vom Pauschalsatz ab. 2026 können Sie bis zu <b>11.304 PLN</b> einzahlen, Selbstständige bis zu <b>16.956 PLN</b>.</p>
+<p>Erträge im IKZE sind von der Belka-Steuer befreit. Bei Auszahlung ab 65 zahlen Sie nur pauschal 10 % Steuer auf den gesamten Betrag. Bei früherer Auszahlung wird das Geld Ihrem Einkommen zugerechnet und normal versteuert.</p>
+<h2>IKZE oder IKE?</h2>
+<p>Das IKZE bringt sofort einen Vorteil — jedes Jahr eine Steuererstattung. Das IKE (Limit 28.260 PLN im Jahr 2026) bietet keine Vergünstigung bei der Einzahlung, dafür ist die Auszahlung ab 60 komplett steuerfrei. Am meisten profitiert, wer beide Konten hat: zuerst das IKZE-Limit ausschöpfen, den Rest ins IKE. Auf beiden Konten können z. B. EDO-Staatsanleihen, ETFs oder Fonds liegen.</p>
+<h2>So rechnen wir</h2>
+<p>Wir nehmen an, dass zu Beginn jedes Jahres derselbe Betrag zur angegebenen Durchschnittsrendite eingezahlt wird. Steuererstattungen gelten als Bargeld (nicht reinvestiert). Zum Vergleich rechnen wir ein normales Depot mit denselben Einzahlungen und 19 % Belka-Steuer auf den Gewinn bei Auszahlung.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["w","t","j","n","r"],()=>{
+  const lim=num("j")?16956:11304,W=Math.min(Math.max(0,num("w")),lim),t=num("t"),n=Math.max(1,Math.round(num("n"))),r=num("r")/100;
+  let v=0;for(let y=0;y<n;y++)v=(v+W)*(1+r);
+  const paid=W*n,refund=W*t,ikze=v*0.9+refund*n,normal=v-Math.max(0,v-paid)*0.19;
+  out.innerHTML=`Steuererstattung pro Jahr: <b>${fmt(refund)}</b>${num("w")>lim?"<br><small>Einzahlung auf das Limit von ${fmt(lim)} begrenzt.</small>":""}<br>Vorteil des IKZE gegenüber einem normalen Konto nach ${n} Jahren: <b>${fmt(ikze-normal)}</b>`;
+  tbl.innerHTML=[["Summe der Einzahlungen",paid],["Kontowert bei Rentenbeginn",v],["IKZE nach 10 % Steuer",v*0.9],["Summe der Steuererstattungen",refund*n],["IKZE gesamt",ikze],["Normales Konto nach Belka-Steuer",normal]].map(x=>`<tr><td>${x[0]}</td><td>${fmt(x[1])}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Die Berechnungen dienen nur zur Orientierung und sind keine Finanz- oder Anlageberatung. Berechnet nach polnischen Regeln in Złoty (PLN). Diese Seite enthält Partnerlinks. © FinKalk</footer>
+</body>
+</html>

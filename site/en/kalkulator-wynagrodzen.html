@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Poland Salary Calculator 2026 — Gross to Net (Umowa o pracę)</title>
+<meta name="description" content="Convert gross to net salary on a Polish employment contract (umowa o pracę): ZUS social security, health insurance and PIT income tax.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/site.js" defer></script>
+<script src="../assets/partners.js" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://kavasss.github.io/asist/en/kalkulator-wynagrodzen.html">
+<link rel="alternate" hreflang="pl" href="https://kavasss.github.io/asist/kalkulator-wynagrodzen.html">
+<link rel="alternate" hreflang="en" href="https://kavasss.github.io/asist/en/kalkulator-wynagrodzen.html">
+<link rel="alternate" hreflang="uk" href="https://kavasss.github.io/asist/uk/kalkulator-wynagrodzen.html">
+<link rel="alternate" hreflang="ru" href="https://kavasss.github.io/asist/ru/kalkulator-wynagrodzen.html">
+<link rel="alternate" hreflang="de" href="https://kavasss.github.io/asist/de/kalkulator-wynagrodzen.html">
+<link rel="alternate" hreflang="x-default" href="https://kavasss.github.io/asist/kalkulator-wynagrodzen.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Compound interest</a><a href="kalkulator-kredytu.html">Loan</a><a href="nadplata-kredytu.html">Loan overpayment</a><a href="lokata.html">Deposit</a><a href="obligacje-skarbowe.html">Bonds</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Passive income</a><a href="kalkulator-wynagrodzen.html">Salary</a><a href="kalkulator-b2b.html">B2B / JDG</a></nav>
+<!--i18n--><div class="lang"><a href="../kalkulator-wynagrodzen.html" hreflang="pl">PL</a><a href="../en/kalkulator-wynagrodzen.html" hreflang="en" aria-current="true">EN</a><a href="../uk/kalkulator-wynagrodzen.html" hreflang="uk">UA</a><a href="../ru/kalkulator-wynagrodzen.html" hreflang="ru">RU</a><a href="../de/kalkulator-wynagrodzen.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Poland salary calculator: gross → net</h1>
+<div class="card grid">
+<label>Gross salary, PLN / month<input id="b" type="number" value="8000"></label>
+<label>Tax-deductible costs (KUP)<select id="k"><option value="250">Standard (250 PLN)</option><option value="300">Increased (300 PLN, commuting)</option></select></label>
+<label>PIT-2 (tax-free allowance)<select id="z"><option value="300">Yes (300 PLN)</option><option value="0">No</option></select></label>
+<label>Age<select id="u"><option value="0">26 or older</option><option value="1">Under 26 (youth tax relief)</option></select></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="lokata"></div>
+<h2>How we calculate</h2>
+<p>From the gross amount the employee pays ZUS social security contributions: pension 9.76%, disability 1.5% and sickness 2.45%. A 9% health insurance contribution is taken from the remainder. The PIT advance is 12% of the tax base (after tax-deductible costs) minus the 300 PLN allowance if you submitted a PIT-2 form to your employer. People under 26 benefit from a relief and pay no PIT (up to an annual limit).</p>
+<p>The result applies to a typical month in the first tax bracket. We do not include PPK (employee capital plan), exceeding the 120,000 PLN annual threshold, or the annual ZUS contribution cap.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["b","k","z","u"],()=>{
+  const B=num("b"),r2=(x)=>Math.round(x*100)/100;
+  const em=r2(B*0.0976),re=r2(B*0.015),ch=r2(B*0.0245),zus=em+re+ch;
+  const zdr=r2((B-zus)*0.09);
+  const base=Math.max(0,Math.round(B-zus-num("k")));
+  const pit=num("u")?0:Math.max(0,Math.round(base*0.12-num("z")));
+  const net=B-zus-zdr-pit;
+  out.innerHTML=`Take-home pay: <b>${fmt(net)}</b> / month<br>Per year: ${fmt(net*12)}`;
+  const f2=(x)=>new Intl.NumberFormat("pl-PL",{minimumFractionDigits:2,maximumFractionDigits:2}).format(x)+" zł";
+  tbl.innerHTML=[["Gross",B],["Pension contribution (9.76%)",em],["Disability contribution (1.5%)",re],["Sickness contribution (2.45%)",ch],["Health insurance (9%)",zdr],["PIT income tax advance",pit],["Net",net]].map(r=>`<tr><td>${r[0]}</td><td>${f2(r[1])}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Calculations are for illustration only and are not financial advice or an investment recommendation. Calculations follow Polish rules and use Polish złoty (PLN). This site contains affiliate links. © FinKalk</footer>
+</body>
+</html>

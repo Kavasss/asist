@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Passive Income and Financial Independence Calculator</title>
+<meta name="description" content="Find out how much capital you need to live off passive income and how many years it will take to get there.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/site.js" defer></script>
+<script src="../assets/partners.js" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://kavasss.github.io/asist/en/dochod-pasywny.html">
+<link rel="alternate" hreflang="pl" href="https://kavasss.github.io/asist/dochod-pasywny.html">
+<link rel="alternate" hreflang="en" href="https://kavasss.github.io/asist/en/dochod-pasywny.html">
+<link rel="alternate" hreflang="uk" href="https://kavasss.github.io/asist/uk/dochod-pasywny.html">
+<link rel="alternate" hreflang="ru" href="https://kavasss.github.io/asist/ru/dochod-pasywny.html">
+<link rel="alternate" hreflang="de" href="https://kavasss.github.io/asist/de/dochod-pasywny.html">
+<link rel="alternate" hreflang="x-default" href="https://kavasss.github.io/asist/dochod-pasywny.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Compound interest</a><a href="kalkulator-kredytu.html">Loan</a><a href="nadplata-kredytu.html">Loan overpayment</a><a href="lokata.html">Deposit</a><a href="obligacje-skarbowe.html">Bonds</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Passive income</a><a href="kalkulator-wynagrodzen.html">Salary</a><a href="kalkulator-b2b.html">B2B / JDG</a></nav>
+<!--i18n--><div class="lang"><a href="../dochod-pasywny.html" hreflang="pl">PL</a><a href="../en/dochod-pasywny.html" hreflang="en" aria-current="true">EN</a><a href="../uk/dochod-pasywny.html" hreflang="uk">UA</a><a href="../ru/dochod-pasywny.html" hreflang="ru">RU</a><a href="../de/dochod-pasywny.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Passive income calculator</h1>
+<div class="card grid">
+<label>Desired monthly income, PLN<input id="d" type="number" value="6000"></label>
+<label>Safe withdrawal rate, % per year<input id="w" type="number" value="4" step="0.1"></label>
+<label>Capital already saved, PLN<input id="p" type="number" value="20000"></label>
+<label>Monthly savings, PLN<input id="m" type="number" value="1500"></label>
+<label>Annual return, %<input id="r" type="number" value="7" step="0.1"></label>
+</div>
+<div class="card result" id="out"></div>
+<div data-partners="invest"></div>
+<h2>The 4% rule</h2>
+<p>It is commonly assumed that you can withdraw about 4% of a portfolio per year (adjusted for inflation) without a high risk of running out of money. Capital needed ≈ annual expenses × 25.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["d","w","p","m","r"],()=>{
+  const goal=num("d")*12/(Math.max(0.1,num("w"))/100),i=num("r")/100/12;
+  let bal=num("p"),mo=0;while(bal<goal&&mo<1200){bal=bal*(1+i)+num("m");mo++;}
+  out.innerHTML=`Capital needed: <b>${fmt(goal)}</b><br>`+(mo>=1200?"With these assumptions the goal will not be reached within 100 years":`Time to goal: ${Math.floor(mo/12)} yrs ${mo%12} mo.`);
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Calculations are for illustration only and are not financial advice or an investment recommendation. Calculations follow Polish rules and use Polish złoty (PLN). This site contains affiliate links. © FinKalk</footer>
+</body>
+</html>

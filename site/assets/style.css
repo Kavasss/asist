@@ -150,3 +150,13 @@ footer{color:var(--muted);font-size:.82rem;border-top:1px solid var(--border);ma
   main{padding-top:28px}
   .card{padding:18px}
 }
+
+/* przełącznik języków */
+.lang{display:flex;gap:2px;margin-left:auto}
+.lang a{color:var(--muted);text-decoration:none;font:600 .75rem/1 var(--mono);padding:6px 8px;border-radius:999px;border:1px solid transparent}
+.lang a:hover{color:var(--text);border-color:var(--border)}
+.lang a[aria-current]{color:var(--bg);background:var(--grad)}
+header nav{order:3;width:100%}
+/* szerokie tabele przewijają się w karcie zamiast poszerzać stronę na telefonie */
+.card:has(>table){overflow-x:auto}
+@media (max-width:600px){table{font-size:.8rem}td,th{padding:6px 4px}}

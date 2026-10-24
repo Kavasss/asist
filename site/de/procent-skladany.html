@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zinseszinsrechner mit monatlicher Sparrate</title>
+<meta name="description" content="Berechnen Sie, wie Ihr Erspartes mit Zinseszins und monatlicher Sparrate wächst. Tabelle Jahr für Jahr.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/site.js" defer></script>
+<script src="../assets/partners.js" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://kavasss.github.io/asist/de/procent-skladany.html">
+<link rel="alternate" hreflang="pl" href="https://kavasss.github.io/asist/procent-skladany.html">
+<link rel="alternate" hreflang="en" href="https://kavasss.github.io/asist/en/procent-skladany.html">
+<link rel="alternate" hreflang="uk" href="https://kavasss.github.io/asist/uk/procent-skladany.html">
+<link rel="alternate" hreflang="ru" href="https://kavasss.github.io/asist/ru/procent-skladany.html">
+<link rel="alternate" hreflang="de" href="https://kavasss.github.io/asist/de/procent-skladany.html">
+<link rel="alternate" hreflang="x-default" href="https://kavasss.github.io/asist/procent-skladany.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Zinseszins</a><a href="kalkulator-kredytu.html">Kredit</a><a href="nadplata-kredytu.html">Sondertilgung</a><a href="lokata.html">Festgeld</a><a href="obligacje-skarbowe.html">Staatsanleihen</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Passives Einkommen</a><a href="kalkulator-wynagrodzen.html">Gehalt</a><a href="kalkulator-b2b.html">B2B / JDG</a></nav>
+<!--i18n--><div class="lang"><a href="../procent-skladany.html" hreflang="pl">PL</a><a href="../en/procent-skladany.html" hreflang="en">EN</a><a href="../uk/procent-skladany.html" hreflang="uk">UA</a><a href="../ru/procent-skladany.html" hreflang="ru">RU</a><a href="../de/procent-skladany.html" hreflang="de" aria-current="true">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Zinseszinsrechner</h1>
+<div class="card grid">
+<label>Startbetrag, PLN<input id="p" type="number" value="10000"></label>
+<label>Monatliche Sparrate, PLN<input id="m" type="number" value="500"></label>
+<label>Rendite, % pro Jahr<input id="r" type="number" value="7" step="0.1"></label>
+<label>Laufzeit, Jahre<input id="y" type="number" value="20"></label>
+</div>
+<div class="card result" id="out"></div>
+<div data-partners="invest"></div>
+<div class="card"><table id="tbl"></table></div>
+<h2>So funktioniert der Zinseszins</h2>
+<p>Zinsen werden nicht nur auf das eingezahlte Kapital berechnet, sondern auch auf bereits erzielte Erträge. Je länger der Zeitraum, desto stärker der Effekt — deshalb lohnt es sich, früh mit dem Sparen anzufangen. In Polen unterliegen Kapitalerträge der Steuer von 19 % (podatek Belki), außer Sie investieren über ein IKE- oder IKZE-Altersvorsorgekonto.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["p","m","r","y"],()=>{
+  let bal=num("p"),inv=bal;const i=num("r")/100/12,rows=[];
+  for(let mo=1;mo<=num("y")*12;mo++){bal=bal*(1+i)+num("m");inv+=num("m");if(mo%12===0)rows.push([mo/12,inv,bal]);}
+  out.innerHTML=`Ergebnis: <b>${fmt(bal)}</b><br>Eingezahlt: ${fmt(inv)} · Ertrag: ${fmt(bal-inv)}`;
+  tbl.innerHTML="<tr><th>Jahr</th><th>Eingezahlt</th><th>Saldo</th></tr>"+rows.map(r=>`<tr><td>${r[0]}</td><td>${fmt(r[1])}</td><td>${fmt(r[2])}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Die Berechnungen dienen nur zur Orientierung und sind keine Finanz- oder Anlageberatung. Berechnet nach polnischen Regeln in Złoty (PLN). Diese Seite enthält Partnerlinks. © FinKalk</footer>
+</body>
+</html>

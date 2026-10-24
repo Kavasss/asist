@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Калькулятор досрочного погашения кредита — экономия на процентах</title>
+<meta name="description" content="Узнайте, сколько сэкономите, досрочно погашая ипотеку или потребительский кредит в Польше: сокращение срока или меньший платёж. Разовое и ежемесячное погашение.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/site.js" defer></script>
+<script src="../assets/partners.js" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://kavasss.github.io/asist/ru/nadplata-kredytu.html">
+<link rel="alternate" hreflang="pl" href="https://kavasss.github.io/asist/nadplata-kredytu.html">
+<link rel="alternate" hreflang="en" href="https://kavasss.github.io/asist/en/nadplata-kredytu.html">
+<link rel="alternate" hreflang="uk" href="https://kavasss.github.io/asist/uk/nadplata-kredytu.html">
+<link rel="alternate" hreflang="ru" href="https://kavasss.github.io/asist/ru/nadplata-kredytu.html">
+<link rel="alternate" hreflang="de" href="https://kavasss.github.io/asist/de/nadplata-kredytu.html">
+<link rel="alternate" hreflang="x-default" href="https://kavasss.github.io/asist/nadplata-kredytu.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Сложный процент</a><a href="kalkulator-kredytu.html">Кредит</a><a href="nadplata-kredytu.html">Досрочное погашение</a><a href="lokata.html">Вклад</a><a href="obligacje-skarbowe.html">Облигации</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Пассивный доход</a><a href="kalkulator-wynagrodzen.html">Зарплата</a><a href="kalkulator-b2b.html">B2B / ИП</a></nav>
+<!--i18n--><div class="lang"><a href="../nadplata-kredytu.html" hreflang="pl">PL</a><a href="../en/nadplata-kredytu.html" hreflang="en">EN</a><a href="../uk/nadplata-kredytu.html" hreflang="uk">UA</a><a href="../ru/nadplata-kredytu.html" hreflang="ru" aria-current="true">RU</a><a href="../de/nadplata-kredytu.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Калькулятор досрочного погашения кредита</h1>
+<div class="card grid">
+<label>Остаток долга, zł<input id="s" type="number" value="400000"></label>
+<label>Процентная ставка, % годовых<input id="r" type="number" value="7" step="0.01"></label>
+<label>Оставшийся срок, месяцев<input id="n" type="number" value="300"></label>
+<label>Разовое погашение сейчас, zł<input id="o" type="number" value="20000"></label>
+<label>Ежемесячное доп. погашение, zł<input id="m" type="number" value="500"></label>
+<label>Эффект погашения<select id="e"><option value="1">Сокращение срока</option><option value="0">Меньший платёж</option></select></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="kredyt"></div>
+<h2>Сокращение срока или меньший платёж?</h2>
+<p>Сокращение срока кредита почти всегда даёт большую экономию на процентах, потому что платёж остаётся прежним, а долг уменьшается быстрее. Уменьшение платежа снижает ежемесячную нагрузку — это хороший выбор, когда бюджет напряжённый или вы хотите иметь запас на непредвиденные расходы.</p>
+<h2>Может ли банк взять комиссию?</h2>
+<p>По польскому закону при ипотеке с плавающей ставкой банк может брать комиссию за досрочное погашение только в первые 3 года, дальше оно бесплатно. По потребительскому кредиту с плавающей ставкой погашение бесплатно, а с фиксированной — комиссия ограничена законом. Подробности смотрите в кредитном договоре.</p>
+<h2>Гасить кредит досрочно или инвестировать?</h2>
+<p>Досрочное погашение — это «доход», равный ставке кредита, без риска и без налога Belki. Если кредит стоит 7%, а вклад или облигации дают 4–5% до налога, погашение обычно выгоднее. Прежде чем гасить досрочно, создайте финансовую подушку на 3–6 месяцев расходов.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["s","r","n","o","m","e"],()=>{
+  const S=num("s"),i=num("r")/100/12,N=Math.max(1,Math.round(num("n"))),M=Math.max(0,num("m")),shorten=num("e")===1;
+  const annuity=(P,k)=>k<=0?P:i?P*i/(1-Math.pow(1+i,-k)):P/k;
+  const base=annuity(S,N),baseInt=base*N-S;
+  let P=Math.max(0,S-Math.max(0,num("o"))),rate=annuity(P,N),interest=0,months=0,first=rate;
+  while(P>0.01&&months<N){
+    const int=P*i;interest+=int;months++;
+    P=P+int-Math.min(rate,P+int);
+    if(P>0){P=Math.max(0,P-M);if(!shorten&&P>0)rate=annuity(P,N-months);}
+  }
+  const saved=baseInt-interest;
+  out.innerHTML=`Экономия на процентах: <b>${fmt(saved)}</b><br>${shorten?`Кредит погасите на ${N-months} мес. раньше (${((N-months)/12).toFixed(1).replace(".",",")} г.).`:`Новый платёж после разового погашения: ${fmt(first)} вместо ${fmt(base)}.`}`;
+  tbl.innerHTML=[["Платёж без погашения",base],["Проценты без погашения",baseInt],["Проценты с погашением",interest],["Количество платежей с погашением",months]].map((x,k)=>`<tr><td>${x[0]}</td><td>${k===3?x[1]:fmt(x[1])}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Расчёты носят ознакомительный характер и не являются финансовой консультацией или инвестиционной рекомендацией. Расчёты по польским правилам, в злотых (PLN). Сайт содержит партнёрские ссылки. © FinKalk</footer>
+</body>
+</html>

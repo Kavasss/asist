@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Кредитний калькулятор — щомісячний платіж і вартість кредиту</title>
+<meta name="description" content="Розрахуйте ануїтетний платіж за споживчим кредитом або іпотекою в Польщі, повну вартість і суму відсотків.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/site.js" defer></script>
+<script src="../assets/partners.js" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://kavasss.github.io/asist/uk/kalkulator-kredytu.html">
+<link rel="alternate" hreflang="pl" href="https://kavasss.github.io/asist/kalkulator-kredytu.html">
+<link rel="alternate" hreflang="en" href="https://kavasss.github.io/asist/en/kalkulator-kredytu.html">
+<link rel="alternate" hreflang="uk" href="https://kavasss.github.io/asist/uk/kalkulator-kredytu.html">
+<link rel="alternate" hreflang="ru" href="https://kavasss.github.io/asist/ru/kalkulator-kredytu.html">
+<link rel="alternate" hreflang="de" href="https://kavasss.github.io/asist/de/kalkulator-kredytu.html">
+<link rel="alternate" hreflang="x-default" href="https://kavasss.github.io/asist/kalkulator-kredytu.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Складні відсотки</a><a href="kalkulator-kredytu.html">Кредит</a><a href="nadplata-kredytu.html">Переплата кредиту</a><a href="lokata.html">Депозит</a><a href="obligacje-skarbowe.html">Облігації</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Пасивний дохід</a><a href="kalkulator-wynagrodzen.html">Зарплата</a><a href="kalkulator-b2b.html">B2B / ФОП</a></nav>
+<!--i18n--><div class="lang"><a href="../kalkulator-kredytu.html" hreflang="pl">PL</a><a href="../en/kalkulator-kredytu.html" hreflang="en">EN</a><a href="../uk/kalkulator-kredytu.html" hreflang="uk" aria-current="true">UA</a><a href="../ru/kalkulator-kredytu.html" hreflang="ru">RU</a><a href="../de/kalkulator-kredytu.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Кредитний калькулятор</h1>
+<div class="card grid">
+<label>Сума кредиту, zł<input id="s" type="number" value="50000"></label>
+<label>Відсоткова ставка, % річних<input id="r" type="number" value="10" step="0.1"></label>
+<label>Строк, місяців<input id="n" type="number" value="60"></label>
+</div>
+<div class="card result" id="out"></div>
+<div data-partners="kredyt"></div>
+<h2>Що таке ануїтетний платіж (rata równa)</h2>
+<p>Це однаковий щомісячний платіж протягом усього строку кредиту. Спочатку більша частина платежу — відсотки, наприкінці — погашення тіла кредиту. Найбільше економить переплата в перші роки. Пам’ятайте, що реальна вартість кредиту (RRSO) включає також комісії та страхування.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["s","r","n"],()=>{
+  const S=num("s"),i=num("r")/100/12,n=Math.max(1,num("n"));
+  const pay=i?S*i/(1-Math.pow(1+i,-n)):S/n;
+  out.innerHTML=`Щомісячний платіж: <b>${fmt(pay)}</b><br>Усього виплат: ${fmt(pay*n)} · Відсотки: ${fmt(pay*n-S)}`;
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Розрахунки мають ознайомчий характер і не є фінансовою порадою чи інвестиційною рекомендацією. Розрахунки за польськими правилами, у злотих (PLN). Сайт містить партнерські посилання. © FinKalk</footer>
+</body>
+</html>

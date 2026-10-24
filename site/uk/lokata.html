@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Калькулятор депозиту в Польщі з податком Belki</title>
+<meta name="description" content="Розрахуйте чистий дохід від банківського депозиту в Польщі після 19% податку Belki, з капіталізацією або без.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/site.js" defer></script>
+<script src="../assets/partners.js" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://kavasss.github.io/asist/uk/lokata.html">
+<link rel="alternate" hreflang="pl" href="https://kavasss.github.io/asist/lokata.html">
+<link rel="alternate" hreflang="en" href="https://kavasss.github.io/asist/en/lokata.html">
+<link rel="alternate" hreflang="uk" href="https://kavasss.github.io/asist/uk/lokata.html">
+<link rel="alternate" hreflang="ru" href="https://kavasss.github.io/asist/ru/lokata.html">
+<link rel="alternate" hreflang="de" href="https://kavasss.github.io/asist/de/lokata.html">
+<link rel="alternate" hreflang="x-default" href="https://kavasss.github.io/asist/lokata.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Складні відсотки</a><a href="kalkulator-kredytu.html">Кредит</a><a href="nadplata-kredytu.html">Переплата кредиту</a><a href="lokata.html">Депозит</a><a href="obligacje-skarbowe.html">Облігації</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Пасивний дохід</a><a href="kalkulator-wynagrodzen.html">Зарплата</a><a href="kalkulator-b2b.html">B2B / ФОП</a></nav>
+<!--i18n--><div class="lang"><a href="../lokata.html" hreflang="pl">PL</a><a href="../en/lokata.html" hreflang="en">EN</a><a href="../uk/lokata.html" hreflang="uk" aria-current="true">UA</a><a href="../ru/lokata.html" hreflang="ru">RU</a><a href="../de/lokata.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Калькулятор депозиту</h1>
+<div class="card grid">
+<label>Сума депозиту, zł<input id="s" type="number" value="20000"></label>
+<label>Відсоткова ставка, % річних<input id="r" type="number" value="5" step="0.1"></label>
+<label>Строк, місяців<input id="n" type="number" value="12"></label>
+<label>Капіталізація<select id="c"><option value="0">Наприкінці строку</option><option value="1">Щомісячна</option></select></label>
+</div>
+<div class="card result" id="out"></div>
+<div data-partners="lokata"></div>
+<h2>Податок Belki</h2>
+<p>З відсотків за депозитами та ощадними рахунками польський банк автоматично утримує 19% податку на прибуток від капіталу (так званий податок Belki) — декларувати його самостійно не потрібно. Калькулятор показує дохід брутто і нетто.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["s","r","n","c"],()=>{
+  const S=num("s"),i=num("r")/100/12,n=num("n");
+  let gross;
+  if(num("c")){let b=S;for(let k=0;k<n;k++)b+=Math.round(b*i*0.81*100)/100;gross=null;var net=b-S;}
+  else{gross=S*i*n;var net=gross*0.81;}
+  out.innerHTML=`Дохід нетто: <b>${fmt(net)}</b><br>`+(gross!==null?`Дохід брутто: ${fmt(gross)} · Податок Belki: ${fmt(gross-net)}<br>`:"")+`Наприкінці: ${fmt(S+net)}`;
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Розрахунки мають ознайомчий характер і не є фінансовою порадою чи інвестиційною рекомендацією. Розрахунки за польськими правилами, у злотих (PLN). Сайт містить партнерські посилання. © FinKalk</footer>
+</body>
+</html>

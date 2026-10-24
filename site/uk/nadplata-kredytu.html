@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Калькулятор переплати кредиту — скільки заощадите на відсотках</title>
+<meta name="description" content="Дізнайтеся, скільки заощадите, достроково погашаючи іпотеку чи споживчий кредит у Польщі: скорочення строку чи менший платіж. Разова та щомісячна переплата.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/site.js" defer></script>
+<script src="../assets/partners.js" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://kavasss.github.io/asist/uk/nadplata-kredytu.html">
+<link rel="alternate" hreflang="pl" href="https://kavasss.github.io/asist/nadplata-kredytu.html">
+<link rel="alternate" hreflang="en" href="https://kavasss.github.io/asist/en/nadplata-kredytu.html">
+<link rel="alternate" hreflang="uk" href="https://kavasss.github.io/asist/uk/nadplata-kredytu.html">
+<link rel="alternate" hreflang="ru" href="https://kavasss.github.io/asist/ru/nadplata-kredytu.html">
+<link rel="alternate" hreflang="de" href="https://kavasss.github.io/asist/de/nadplata-kredytu.html">
+<link rel="alternate" hreflang="x-default" href="https://kavasss.github.io/asist/nadplata-kredytu.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Складні відсотки</a><a href="kalkulator-kredytu.html">Кредит</a><a href="nadplata-kredytu.html">Переплата кредиту</a><a href="lokata.html">Депозит</a><a href="obligacje-skarbowe.html">Облігації</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Пасивний дохід</a><a href="kalkulator-wynagrodzen.html">Зарплата</a><a href="kalkulator-b2b.html">B2B / ФОП</a></nav>
+<!--i18n--><div class="lang"><a href="../nadplata-kredytu.html" hreflang="pl">PL</a><a href="../en/nadplata-kredytu.html" hreflang="en">EN</a><a href="../uk/nadplata-kredytu.html" hreflang="uk" aria-current="true">UA</a><a href="../ru/nadplata-kredytu.html" hreflang="ru">RU</a><a href="../de/nadplata-kredytu.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Калькулятор дострокового погашення кредиту</h1>
+<div class="card grid">
+<label>Залишок боргу, zł<input id="s" type="number" value="400000"></label>
+<label>Відсоткова ставка, % річних<input id="r" type="number" value="7" step="0.01"></label>
+<label>Залишок строку, місяців<input id="n" type="number" value="300"></label>
+<label>Разова переплата зараз, zł<input id="o" type="number" value="20000"></label>
+<label>Щомісячна переплата, zł<input id="m" type="number" value="500"></label>
+<label>Ефект переплати<select id="e"><option value="1">Скорочення строку</option><option value="0">Менший платіж</option></select></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="kredyt"></div>
+<h2>Скорочення строку чи менший платіж?</h2>
+<p>Скорочення строку кредиту майже завжди дає більшу економію на відсотках, бо платіж лишається тим самим, а борг зменшується швидше. Зменшення платежу знижує щомісячне навантаження — це добрий вибір, коли бюджет напружений або ви хочете мати запас на непередбачені витрати.</p>
+<h2>Чи може банк взяти комісію?</h2>
+<p>За польським законом при іпотеці зі змінною ставкою банк може брати комісію за переплату лише в перші 3 роки, далі переплата безкоштовна. За споживчим кредитом зі змінною ставкою переплата безкоштовна, а з фіксованою — комісія обмежена законом. Деталі дивіться в кредитному договорі.</p>
+<h2>Переплачувати кредит чи інвестувати?</h2>
+<p>Переплата — це «дохід», рівний ставці кредиту, без ризику і без податку Belki. Якщо кредит коштує 7%, а депозит чи облігації дають 4–5% до податку, переплата зазвичай вигідніша. Перш ніж переплачувати, створіть фінансову подушку на 3–6 місяців витрат.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["s","r","n","o","m","e"],()=>{
+  const S=num("s"),i=num("r")/100/12,N=Math.max(1,Math.round(num("n"))),M=Math.max(0,num("m")),shorten=num("e")===1;
+  const annuity=(P,k)=>k<=0?P:i?P*i/(1-Math.pow(1+i,-k)):P/k;
+  const base=annuity(S,N),baseInt=base*N-S;
+  let P=Math.max(0,S-Math.max(0,num("o"))),rate=annuity(P,N),interest=0,months=0,first=rate;
+  while(P>0.01&&months<N){
+    const int=P*i;interest+=int;months++;
+    P=P+int-Math.min(rate,P+int);
+    if(P>0){P=Math.max(0,P-M);if(!shorten&&P>0)rate=annuity(P,N-months);}
+  }
+  const saved=baseInt-interest;
+  out.innerHTML=`Економія на відсотках: <b>${fmt(saved)}</b><br>${shorten?`Кредит погасите на ${N-months} міс. раніше (${((N-months)/12).toFixed(1).replace(".",",")} р.).`:`Новий платіж після разової переплати: ${fmt(first)} замість ${fmt(base)}.`}`;
+  tbl.innerHTML=[["Платіж без переплати",base],["Відсотки без переплати",baseInt],["Відсотки з переплатою",interest],["Кількість платежів з переплатою",months]].map((x,k)=>`<tr><td>${x[0]}</td><td>${k===3?x[1]:fmt(x[1])}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Розрахунки мають ознайомчий характер і не є фінансовою порадою чи інвестиційною рекомендацією. Розрахунки за польськими правилами, у злотих (PLN). Сайт містить партнерські посилання. © FinKalk</footer>
+</body>
+</html>

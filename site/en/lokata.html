@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bank Deposit Calculator Poland — Interest after Belka Tax</title>
+<meta name="description" content="Calculate net interest on a Polish bank deposit after the 19% Belka tax, with or without monthly compounding.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/site.js" defer></script>
+<script src="../assets/partners.js" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://kavasss.github.io/asist/en/lokata.html">
+<link rel="alternate" hreflang="pl" href="https://kavasss.github.io/asist/lokata.html">
+<link rel="alternate" hreflang="en" href="https://kavasss.github.io/asist/en/lokata.html">
+<link rel="alternate" hreflang="uk" href="https://kavasss.github.io/asist/uk/lokata.html">
+<link rel="alternate" hreflang="ru" href="https://kavasss.github.io/asist/ru/lokata.html">
+<link rel="alternate" hreflang="de" href="https://kavasss.github.io/asist/de/lokata.html">
+<link rel="alternate" hreflang="x-default" href="https://kavasss.github.io/asist/lokata.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Compound interest</a><a href="kalkulator-kredytu.html">Loan</a><a href="nadplata-kredytu.html">Loan overpayment</a><a href="lokata.html">Deposit</a><a href="obligacje-skarbowe.html">Bonds</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Passive income</a><a href="kalkulator-wynagrodzen.html">Salary</a><a href="kalkulator-b2b.html">B2B / JDG</a></nav>
+<!--i18n--><div class="lang"><a href="../lokata.html" hreflang="pl">PL</a><a href="../en/lokata.html" hreflang="en" aria-current="true">EN</a><a href="../uk/lokata.html" hreflang="uk">UA</a><a href="../ru/lokata.html" hreflang="ru">RU</a><a href="../de/lokata.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Bank deposit calculator</h1>
+<div class="card grid">
+<label>Deposit amount, PLN<input id="s" type="number" value="20000"></label>
+<label>Interest rate, % per year<input id="r" type="number" value="5" step="0.1"></label>
+<label>Term, months<input id="n" type="number" value="12"></label>
+<label>Compounding<select id="c"><option value="0">At the end of the term</option><option value="1">Monthly</option></select></label>
+</div>
+<div class="card result" id="out"></div>
+<div data-partners="lokata"></div>
+<h2>Belka tax</h2>
+<p>Polish banks automatically deduct 19% capital gains tax (the so-called Belka tax) from interest on deposits and savings accounts — you don’t need to declare it yourself. The calculator shows both gross and net interest.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["s","r","n","c"],()=>{
+  const S=num("s"),i=num("r")/100/12,n=num("n");
+  let gross;
+  if(num("c")){let b=S;for(let k=0;k<n;k++)b+=Math.round(b*i*0.81*100)/100;gross=null;var net=b-S;}
+  else{gross=S*i*n;var net=gross*0.81;}
+  out.innerHTML=`Net interest: <b>${fmt(net)}</b><br>`+(gross!==null?`Gross interest: ${fmt(gross)} · Belka tax: ${fmt(gross-net)}<br>`:"")+`At the end: ${fmt(S+net)}`;
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Calculations are for illustration only and are not financial advice or an investment recommendation. Calculations follow Polish rules and use Polish złoty (PLN). This site contains affiliate links. © FinKalk</footer>
+</body>
+</html>

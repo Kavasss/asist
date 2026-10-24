@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Калькулятор IKZE 2026 — налоговая льгота и возврат налога</title>
+<meta name="description" content="Рассчитайте возврат налога за взносы на IKZE в 2026 году (лимит 11 304 zł, для ИП 16 956 zł) и сколько выиграете на пенсии по сравнению с обычным счётом.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/site.js" defer></script>
+<script src="../assets/partners.js" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://kavasss.github.io/asist/ru/kalkulator-ikze.html">
+<link rel="alternate" hreflang="pl" href="https://kavasss.github.io/asist/kalkulator-ikze.html">
+<link rel="alternate" hreflang="en" href="https://kavasss.github.io/asist/en/kalkulator-ikze.html">
+<link rel="alternate" hreflang="uk" href="https://kavasss.github.io/asist/uk/kalkulator-ikze.html">
+<link rel="alternate" hreflang="ru" href="https://kavasss.github.io/asist/ru/kalkulator-ikze.html">
+<link rel="alternate" hreflang="de" href="https://kavasss.github.io/asist/de/kalkulator-ikze.html">
+<link rel="alternate" hreflang="x-default" href="https://kavasss.github.io/asist/kalkulator-ikze.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Сложный процент</a><a href="kalkulator-kredytu.html">Кредит</a><a href="nadplata-kredytu.html">Досрочное погашение</a><a href="lokata.html">Вклад</a><a href="obligacje-skarbowe.html">Облигации</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Пассивный доход</a><a href="kalkulator-wynagrodzen.html">Зарплата</a><a href="kalkulator-b2b.html">B2B / ИП</a></nav>
+<!--i18n--><div class="lang"><a href="../kalkulator-ikze.html" hreflang="pl">PL</a><a href="../en/kalkulator-ikze.html" hreflang="en">EN</a><a href="../uk/kalkulator-ikze.html" hreflang="uk">UA</a><a href="../ru/kalkulator-ikze.html" hreflang="ru" aria-current="true">RU</a><a href="../de/kalkulator-ikze.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Калькулятор IKZE 2026 — сколько налога вернёте</h1>
+<div class="card grid">
+<label>Взнос на IKZE за год, zł<input id="w" type="number" value="11304" step="100"></label>
+<label>Форма налогообложения<select id="t"><option value="0.12">Шкала — ставка 12%</option><option value="0.32">Шкала — ставка 32%</option><option value="0.19">Линейный налог 19%</option></select></label>
+<label>Есть ИП (JDG)?<select id="j"><option value="0">Нет — лимит 11 304 zł</option><option value="1">Да — лимит 16 956 zł</option></select></label>
+<label>Лет до пенсии (выплата после 65 лет)<input id="n" type="number" value="25"></label>
+<label>Средняя доходность, % годовых<input id="r" type="number" value="6" step="0.1"></label>
+</div>
+<div class="card result" id="out"></div>
+<div class="card"><table id="tbl"></table></div>
+<div data-partners="invest"></div>
+<h2>Как работает льгота IKZE</h2>
+<p>Взносы на IKZE (индивидуальный счёт пенсионного обеспечения) вычитаются из дохода в годовой декларации PIT. Возврат налога равен взносу, умноженному на вашу ставку: 12% или 32% по шкале, 19% по линейному налогу. На ryczałt взнос вычитается из выручки, поэтому возврат зависит от ставки ryczałt. В 2026 году можно внести максимум <b>11 304 zł</b>, а предпринимателям — <b>16 956 zł</b>.</p>
+<p>Доход на IKZE не облагается налогом Belki. При выплате после 65 лет вы платите только 10% фиксированного налога со всей суммы. Если снять деньги раньше, их нужно добавить к доходу и обложить налогом по вашей ставке.</p>
+<h2>IKZE или IKE?</h2>
+<p>IKZE даёт выгоду сразу — возврат налога каждый год. IKE (лимит 28 260 zł в 2026) не даёт льготы при взносе, но выплата после 60 лет полностью освобождена от налога. Больше всего выигрывают те, у кого есть оба счёта: сначала заполняют лимит IKZE, а остаток вносят на IKE. На обоих счетах можно держать, например, облигации EDO, ETF или фонды.</p>
+<h2>Как мы считаем</h2>
+<p>Предполагаем взнос одинаковой суммы в начале каждого года и указанную среднюю доходность. Возвраты налога считаем наличными (без реинвестирования). Для сравнения считаем обычный брокерский счёт с теми же взносами и налогом Belki 19% с прибыли при выплате.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["w","t","j","n","r"],()=>{
+  const lim=num("j")?16956:11304,W=Math.min(Math.max(0,num("w")),lim),t=num("t"),n=Math.max(1,Math.round(num("n"))),r=num("r")/100;
+  let v=0;for(let y=0;y<n;y++)v=(v+W)*(1+r);
+  const paid=W*n,refund=W*t,ikze=v*0.9+refund*n,normal=v-Math.max(0,v-paid)*0.19;
+  out.innerHTML=`Возврат налога за год: <b>${fmt(refund)}</b>${num("w")>lim?"<br><small>Взнос ограничен лимитом ${fmt(lim)}.</small>":""}<br>Преимущество IKZE над обычным счётом через ${n} г.: <b>${fmt(ikze-normal)}</b>`;
+  tbl.innerHTML=[["Всего внесено",paid],["Стоимость счёта на пенсии",v],["IKZE после налога 10%",v*0.9],["Сумма возвратов налога",refund*n],["IKZE итого",ikze],["Обычный счёт после налога Belki",normal]].map(x=>`<tr><td>${x[0]}</td><td>${fmt(x[1])}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Расчёты носят ознакомительный характер и не являются финансовой консультацией или инвестиционной рекомендацией. Расчёты по польским правилам, в злотых (PLN). Сайт содержит партнёрские ссылки. © FinKalk</footer>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Калькулятор сложного процента с пополнением</title>
+<meta name="description" content="Рассчитайте рост сбережений благодаря сложному проценту и ежемесячным взносам. Таблица по годам.">
+<meta name="theme-color" content="#07080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/site.js" defer></script>
+<script src="../assets/partners.js" defer></script>
+<!--hreflang-->
+<link rel="canonical" href="https://kavasss.github.io/asist/ru/procent-skladany.html">
+<link rel="alternate" hreflang="pl" href="https://kavasss.github.io/asist/procent-skladany.html">
+<link rel="alternate" hreflang="en" href="https://kavasss.github.io/asist/en/procent-skladany.html">
+<link rel="alternate" hreflang="uk" href="https://kavasss.github.io/asist/uk/procent-skladany.html">
+<link rel="alternate" hreflang="ru" href="https://kavasss.github.io/asist/ru/procent-skladany.html">
+<link rel="alternate" hreflang="de" href="https://kavasss.github.io/asist/de/procent-skladany.html">
+<link rel="alternate" hreflang="x-default" href="https://kavasss.github.io/asist/procent-skladany.html">
+<!--/hreflang-->
+</head>
+<body>
+<header>
+<a href="index.html"><span class="logo-mark"></span>FinKalk</a>
+<nav><a href="procent-skladany.html">Сложный процент</a><a href="kalkulator-kredytu.html">Кредит</a><a href="nadplata-kredytu.html">Досрочное погашение</a><a href="lokata.html">Вклад</a><a href="obligacje-skarbowe.html">Облигации</a><a href="kalkulator-ikze.html">IKZE</a><a href="dochod-pasywny.html">Пассивный доход</a><a href="kalkulator-wynagrodzen.html">Зарплата</a><a href="kalkulator-b2b.html">B2B / ИП</a></nav>
+<!--i18n--><div class="lang"><a href="../procent-skladany.html" hreflang="pl">PL</a><a href="../en/procent-skladany.html" hreflang="en">EN</a><a href="../uk/procent-skladany.html" hreflang="uk">UA</a><a href="../ru/procent-skladany.html" hreflang="ru" aria-current="true">RU</a><a href="../de/procent-skladany.html" hreflang="de">DE</a></div><!--/i18n-->
+</header>
+<main>
+<h1>Калькулятор сложного процента</h1>
+<div class="card grid">
+<label>Начальная сумма, zł<input id="p" type="number" value="10000"></label>
+<label>Ежемесячный взнос, zł<input id="m" type="number" value="500"></label>
+<label>Доходность, % годовых<input id="r" type="number" value="7" step="0.1"></label>
+<label>Срок, лет<input id="y" type="number" value="20"></label>
+</div>
+<div class="card result" id="out"></div>
+<div data-partners="invest"></div>
+<div class="card"><table id="tbl"></table></div>
+<h2>Как работает сложный процент</h2>
+<p>Проценты начисляются не только на вложенный капитал, но и на уже полученную прибыль. Чем дольше срок, тем сильнее эффект — поэтому начинать копить стоит как можно раньше. В Польше доход от инвестиций облагается налогом Belki (19%), если вы не инвестируете через пенсионные счета IKE или IKZE.</p>
+<script>
+document.addEventListener("DOMContentLoaded",()=>bindCalc(["p","m","r","y"],()=>{
+  let bal=num("p"),inv=bal;const i=num("r")/100/12,rows=[];
+  for(let mo=1;mo<=num("y")*12;mo++){bal=bal*(1+i)+num("m");inv+=num("m");if(mo%12===0)rows.push([mo/12,inv,bal]);}
+  out.innerHTML=`Результат: <b>${fmt(bal)}</b><br>Внесено: ${fmt(inv)} · Прибыль: ${fmt(bal-inv)}`;
+  tbl.innerHTML="<tr><th>Год</th><th>Внесено</th><th>Баланс</th></tr>"+rows.map(r=>`<tr><td>${r[0]}</td><td>${fmt(r[1])}</td><td>${fmt(r[2])}</td></tr>`).join("");
+}));
+</script>
+<div class="ad"></div>
+</main>
+<footer>Расчёты носят ознакомительный характер и не являются финансовой консультацией или инвестиционной рекомендацией. Расчёты по польским правилам, в злотых (PLN). Сайт содержит партнёрские ссылки. © FinKalk</footer>
+</body>
+</html>
