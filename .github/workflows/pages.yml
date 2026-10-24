@@ -1,7 +1,7 @@
 name: Deploy site to GitHub Pages
 on:
   push:
-    branches: [main, claude/wonderful-bardeen-xv7bb5]
+    branches: [claude/wonderful-bardeen-xv7bb5]  # единственная ветка, из которой GitHub Pages разрешает деплой
   workflow_dispatch:
 permissions:
   contents: read
@@ -9,7 +9,7 @@ permissions:
   id-token: write
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   deploy:
     runs-on: ubuntu-latest
