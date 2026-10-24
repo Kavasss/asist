@@ -1,7 +1,13 @@
 // Oferty partnerskie. Blok wyświetla się tylko, gdy uzupełniony jest url.
 // url        — Twój link afiliacyjny z sieci (MyLead, Systempartnerski.pl, Afilo, Comperia, Awin itp.)
+//              lub tablica linków — wtedy przy każdym wejściu losowany jest jeden
 // advertiser — nazwa reklamodawcy (opcjonalnie, do oznaczenia reklamy)
-const LINK_PF = "https://kavasss.produktyfinansowe.pl/e/lead/3332?source=lt";
+// Linki produktyfinansowe.pl — rotowane losowo.
+const LINK_PF = [
+  "https://kavasss.produktyfinansowe.pl/e/lead/3332?source=lt",
+  "https://kavasss.produktyfinansowe.pl/e/lead/2189?source=lt",
+  "https://kavasss.produktyfinansowe.pl/e/lead/1437?source=lt",
+];
 
 const PARTNERS = {
   lokata: [
@@ -17,7 +23,8 @@ const PARTNERS = {
 
 function renderPartners() {
   document.querySelectorAll("[data-partners]").forEach((box) => {
-    const offers = (PARTNERS[box.dataset.partners] || []).filter((o) => o.url);
+    const pick = (u) => (Array.isArray(u) ? u[Math.floor(Math.random() * u.length)] : u);
+    const offers = (PARTNERS[box.dataset.partners] || []).map((o) => ({ ...o, url: pick(o.url) })).filter((o) => o.url);
     box.innerHTML = offers.map((o) => `
       <div class="card offer">
         <b>${o.title}</b><p>${o.text}</p>
