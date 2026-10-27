@@ -8,6 +8,7 @@
 | `reklama-1x1-feed-glos.mp4` | 1080×1080, 20,5 s, z lektorem | jak wyżej |
 | `reklama-9x16-elevenlabs.mp4` | 1080×1920, 15,5 s, głos ElevenLabs | **główna wersja do reklamy** — bez czarnych pasów i planszy ElevenLabs |
 | `reklama-9x16-elevenlabs-cicha-muzyka.mp4` | 1080×1920, 15,5 s | jak wyżej, muzyka ciszej o 50% |
+| `reklama-9x16-muzyka-bez-glosu.mp4` | 1080×1920, 15,5 s | tylko muzyka ElevenLabs, bez lektora |
 | `lektor-pl.wav` | sam głos lektora | do własnego montażu |
 | `napisy-pl.srt` | napisy PL | wgraj jako napisy w TikTok/Meta/YouTube |
 
