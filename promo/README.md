@@ -6,6 +6,7 @@
 | `reklama-1x1-feed.mp4` | 1080×1080, 15 s | Feed Facebook/Instagram, Google Ads (Demand Gen) |
 | `reklama-9x16-reels-tiktok-glos.mp4` | 1080×1920, 20,5 s, z lektorem | jak wyżej |
 | `reklama-1x1-feed-glos.mp4` | 1080×1080, 20,5 s, z lektorem | jak wyżej |
+| `reklama-9x16-elevenlabs.mp4` | 1080×1920, 15,5 s, głos ElevenLabs | **główna wersja do reklamy** — bez czarnych pasów i planszy ElevenLabs |
 | `lektor-pl.wav` | sam głos lektora | do własnego montażu |
 | `napisy-pl.srt` | napisy PL | wgraj jako napisy w TikTok/Meta/YouTube |
 
