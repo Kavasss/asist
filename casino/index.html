@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Golden Chip Casino</title>
+<meta name="description" content="Демо-казино на виртуальных фишках: слоты, рулетка, блэкджек, кости и мины. Без реальных денег.">
+<style>
+:root{
+  --bg:#0b1410; --felt:#0f3d2a; --felt2:#145236; --panel:#13201a; --line:#24382d;
+  --gold:#e8b84a; --gold2:#ffd77a; --text:#eef3ef; --muted:#9db3a6;
+  --red:#d33a3a; --black:#1d1d1f; --green:#1f9d55; --win:#3ddc84; --lose:#ff6b6b;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:radial-gradient(1200px 600px at 50% -200px,#1b3a2b,var(--bg));background-color:var(--bg);color:var(--text);
+  font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:10px 16px;background:var(--line);color:var(--text);transition:transform .08s,filter .15s}
+button:hover{filter:brightness(1.15)}
+button:active{transform:scale(.97)}
+button:disabled{opacity:.45;cursor:not-allowed;filter:none;transform:none}
+button.primary{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#2a1d00;font-weight:700}
+input{font:inherit;background:#0a120e;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:9px 12px;width:100%}
+input[type=range]{padding:0;accent-color:var(--gold)}
+label{display:block;color:var(--muted);font-size:13px;margin-bottom:4px}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+header{position:sticky;top:0;z-index:10;background:rgba(11,20,16,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0}
+.logo{font-weight:800;font-size:20px;letter-spacing:.5px;color:var(--gold2);white-space:nowrap}
+.logo span{color:var(--text)}
+.bal{display:flex;align-items:center;gap:10px}
+.chips{background:#0a120e;border:1px solid var(--gold);color:var(--gold2);border-radius:999px;padding:6px 14px;font-weight:700;white-space:nowrap}
+nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none}
+nav button{background:transparent;border:1px solid var(--line);white-space:nowrap;padding:8px 14px}
+nav button.on{background:var(--felt2);border-color:var(--gold);color:var(--gold2)}
+main{padding:20px 0 40px}
+.game{display:none}.game.on{display:block}
+.table{background:radial-gradient(circle at 50% 30%,var(--felt2),var(--felt));border:1px solid #2b6a4a;border-radius:18px;padding:20px;box-shadow:inset 0 0 60px rgba(0,0,0,.35)}
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;align-items:end;margin-top:16px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.msg{min-height:26px;margin-top:14px;font-weight:600;text-align:center}
+.msg.win{color:var(--win)}.msg.lose{color:var(--lose)}
+h2{margin:0 0 12px;font-size:22px}
+.muted{color:var(--muted);font-size:13px}
+/* lobby */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;cursor:pointer;transition:transform .15s,border-color .15s;text-align:left;width:100%}
+.card:hover{transform:translateY(-3px);border-color:var(--gold)}
+.card .ico{font-size:40px}
+.card b{display:block;margin:8px 0 2px;font-size:17px}
+.hero{text-align:center;padding:10px 0 24px}
+.hero h1{margin:0;font-size:32px;color:var(--gold2)}
+/* slots */
+.reels{display:flex;justify-content:center;gap:10px;margin:10px 0}
+.reel{width:min(28vw,120px);height:min(28vw,120px);background:#fff8e6;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-size:min(16vw,68px);box-shadow:inset 0 -8px 16px rgba(0,0,0,.18),0 4px 0 #b48a2a;border:3px solid var(--gold)}
+.reel.spin{animation:blur .1s linear infinite}
+@keyframes blur{50%{transform:translateY(4px);filter:blur(1.5px)}}
+.paytable{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px;margin-top:14px;font-size:13px}
+.paytable div{background:rgba(0,0,0,.25);border-radius:8px;padding:6px 10px}
+/* roulette */
+.wheel{width:120px;height:120px;margin:0 auto 14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:800;
+  border:6px solid var(--gold);background:var(--black);transition:background .2s}
+.wheel.red{background:var(--red)}.wheel.green{background:var(--green)}
+.rgrid{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));gap:3px}
+.rc{position:relative;aspect-ratio:1/1.1;display:flex;align-items:center;justify-content:center;border-radius:6px;font-weight:700;font-size:clamp(10px,2.4vw,15px);
+  cursor:pointer;user-select:none;border:1px solid rgba(255,255,255,.15);padding:0}
+.rc.r{background:var(--red)}.rc.b{background:var(--black)}.rc.g{background:var(--green);aspect-ratio:auto}
+.outs,.outs2{padding-left:calc((100% - 39px) / 14 + 3px)}
+.outs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;margin-top:3px}
+.outs2{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:3px;margin-top:3px}
+.rc.o{background:rgba(0,0,0,.3);aspect-ratio:auto;padding:10px 2px;font-size:clamp(10px,2.4vw,13px)}
+.chip{position:absolute;top:-6px;right:-6px;background:var(--gold2);color:#2a1d00;border-radius:999px;font-size:10px;padding:1px 5px;font-weight:800;box-shadow:0 1px 3px #000;z-index:2}
+.hist{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+.hist span{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+/* blackjack */
+.hand{display:flex;gap:8px;flex-wrap:wrap;min-height:96px;margin:6px 0 14px}
+.pc{width:64px;height:92px;background:#fff;color:#111;border-radius:8px;display:flex;flex-direction:column;justify-content:space-between;padding:5px 7px;
+  font-weight:700;box-shadow:0 3px 8px rgba(0,0,0,.4);animation:deal .25s ease-out}
+.pc .c{text-align:center;font-size:28px}
+.pc.red{color:#c62828}
+.pc.back{background:repeating-linear-gradient(45deg,#7a1d1d 0 6px,#952525 6px 12px);border:3px solid #fff}
+@keyframes deal{from{transform:translateY(-20px);opacity:0}}
+/* dice */
+.big{font-size:56px;font-weight:800;text-align:center;margin:6px 0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;margin-top:10px}
+.stats div{background:rgba(0,0,0,.25);border-radius:10px;padding:8px}
+.stats b{display:block;font-size:18px;color:var(--gold2)}
+/* mines */
+.mgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;max-width:380px;margin:0 auto}
+.mc{aspect-ratio:1;border-radius:12px;background:#1d4d36;font-size:28px;padding:0;border:1px solid #2f7352}
+.mc.gem{background:#174a6b;border-color:#3aa0d8}
+.mc.bomb{background:#6b1717;border-color:#d83a3a}
+.mc.dim{opacity:.55}
+footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);font-size:13px;text-align:center}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--panel);border:1px solid var(--gold);padding:10px 18px;border-radius:12px;
+  opacity:0;transition:opacity .25s;pointer-events:none;z-index:50;max-width:calc(100vw - 32px)}
+.toast.on{opacity:1}
+.age{position:fixed;inset:0;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}
+.age[hidden]{display:none}
+.age div{background:var(--panel);border:1px solid var(--gold);border-radius:16px;padding:24px;max-width:420px;text-align:center}
+@media (max-width:560px){.hero h1{font-size:26px}.table{padding:14px}.pc{width:52px;height:76px}.pc .c{font-size:22px}.chips{padding:5px 10px}}
+</style>
+</head>
+<body>
+
+<div class="age" id="age" hidden>
+  <div>
+    <h2>18+</h2>
+    <p>Это <b>демо-казино на виртуальных фишках</b>. Здесь нельзя внести или вывести деньги, фишки ничего не стоят.</p>
+    <p class="muted">Азартные игры на реальные деньги могут вызывать зависимость. Если игра перестала быть развлечением, обратитесь за помощью.</p>
+    <button class="primary" id="ageOk">Мне есть 18, войти</button>
+  </div>
+</div>
+
+<header>
+  <div class="wrap">
+    <div class="top">
+      <div class="logo">🎰 Golden<span>Chip</span></div>
+      <div class="bal">
+        <div class="chips" title="Виртуальные фишки">🪙 <span id="balance">0</span></div>
+        <button id="bonus" title="Бесплатные фишки">+ Бонус</button>
+      </div>
+    </div>
+    <nav id="nav">
+      <button data-g="lobby" class="on">🏠 Лобби</button>
+      <button data-g="slots">🍒 Слоты</button>
+      <button data-g="roulette">🎡 Рулетка</button>
+      <button data-g="blackjack">🃏 Блэкджек</button>
+      <button data-g="dice">🎲 Кости</button>
+      <button data-g="mines">💣 Мины</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- LOBBY -->
+  <section class="game on" id="g-lobby">
+    <div class="hero">
+      <h1>Добро пожаловать в Golden Chip</h1>
+      <p class="muted">Стартовый баланс 1000 фишек. Закончились? Нажмите «+ Бонус».</p>
+    </div>
+    <div class="cards">
+      <button class="card" data-g="slots"><div class="ico">🍒</div><b>Слоты</b><span class="muted">3 барабана, джекпот ×200</span></button>
+      <button class="card" data-g="roulette"><div class="ico">🎡</div><b>Рулетка</b><span class="muted">Европейская, одно зеро</span></button>
+      <button class="card" data-g="blackjack"><div class="ico">🃏</div><b>Блэкджек</b><span class="muted">Блэкджек платит 3:2</span></button>
+      <button class="card" data-g="dice"><div class="ico">🎲</div><b>Кости</b><span class="muted">Сами выбираете шанс</span></button>
+      <button class="card" data-g="mines"><div class="ico">💣</div><b>Мины</b><span class="muted">Открывайте клетки, забирайте вовремя</span></button>
+    </div>
+    <div class="table" style="margin-top:20px">
+      <h2>📊 Ваша статистика</h2>
+      <div class="stats">
+        <div>Ставок<b id="stBets">0</b></div>
+        <div>Поставлено<b id="stWager">0</b></div>
+        <div>Лучший выигрыш<b id="stBest">0</b></div>
+      </div>
+      <div class="row" style="justify-content:center;margin-top:14px"><button id="reset">Сбросить прогресс</button></div>
+    </div>
+  </section>
+
+  <!-- SLOTS -->
+  <section class="game" id="g-slots">
+    <div class="table">
+      <h2>🍒 Слоты</h2>
+      <div class="reels"><div class="reel">🍒</div><div class="reel">💎</div><div class="reel">7️⃣</div></div>
+      <div class="controls">
+        <div><label>Ставка</label><input type="number" id="slBet" min="1" value="10"></div>
+        <div class="row"><button data-mul="slBet:0.5">½</button><button data-mul="slBet:2">×2</button></div>
+        <button class="primary" id="slSpin">Крутить</button>
+      </div>
+      <div class="msg" id="slMsg"></div>
+      <div class="paytable" id="payTable"></div>
+    </div>
+  </section>
+
+  <!-- ROULETTE -->
+  <section class="game" id="g-roulette">
+    <div class="table">
+      <h2>🎡 Рулетка</h2>
+      <div class="wheel green" id="wheel">0</div>
+      <div class="rgrid" id="rgrid"></div>
+      <div class="outs" id="outs"></div>
+      <div class="outs2" id="outs2"></div>
+      <div class="controls">
+        <div><label>Фишка (сколько ставить за клик)</label><input type="number" id="ruChip" min="1" value="10"></div>
+        <div><label>Всего на столе</label><div class="chips" style="text-align:center">🪙 <span id="ruTotal">0</span></div></div>
+        <button id="ruClear">Убрать ставки</button>
+        <button class="primary" id="ruSpin">Крутить</button>
+      </div>
+      <div class="msg" id="ruMsg">Нажимайте на поля, чтобы поставить фишки</div>
+      <div class="hist" id="ruHist"></div>
+    </div>
+  </section>
+
+  <!-- BLACKJACK -->
+  <section class="game" id="g-blackjack">
+    <div class="table">
+      <h2>🃏 Блэкджек</h2>
+      <div class="muted">Дилер <span id="bjDs"></span></div>
+      <div class="hand" id="bjDealer"></div>
+      <div class="muted">Вы <span id="bjPs"></span></div>
+      <div class="hand" id="bjPlayer"></div>
+      <div class="controls">
+        <div><label>Ставка</label><input type="number" id="bjBet" min="1" value="20"></div>
+        <button class="primary" id="bjDeal">Раздать</button>
+        <button id="bjHit" disabled>Ещё</button>
+        <button id="bjStand" disabled>Хватит</button>
+        <button id="bjDouble" disabled>Удвоить</button>
+      </div>
+      <div class="msg" id="bjMsg"></div>
+      <p class="muted">Шуз из 6 колод. Дилер останавливается на любых 17. Блэкджек платит 3:2, остальные выигрыши 1:1.</p>
+    </div>
+  </section>
+
+  <!-- DICE -->
+  <section class="game" id="g-dice">
+    <div class="table">
+      <h2>🎲 Кости</h2>
+      <div class="big" id="diRoll">—</div>
+      <div><label>Выигрыш, если выпадет меньше <b id="diTargetLbl">50</b> (из 1–100)</label>
+        <input type="range" id="diTarget" min="3" max="96" value="50"></div>
+      <div class="stats">
+        <div>Шанс<b id="diChance">49%</b></div>
+        <div>Множитель<b id="diMult">×2.02</b></div>
+        <div>Выплата<b id="diPay">20</b></div>
+      </div>
+      <div class="controls">
+        <div><label>Ставка</label><input type="number" id="diBet" min="1" value="10"></div>
+        <div class="row"><button data-mul="diBet:0.5">½</button><button data-mul="diBet:2">×2</button></div>
+        <button class="primary" id="diGo">Бросить</button>
+      </div>
+      <div class="msg" id="diMsg"></div>
+    </div>
+  </section>
+
+  <!-- MINES -->
+  <section class="game" id="g-mines">
+    <div class="table">
+      <h2>💣 Мины</h2>
+      <div class="mgrid" id="mgrid"></div>
+      <div class="stats">
+        <div>Открыто<b id="miOpen">0</b></div>
+        <div>Множитель<b id="miMult">×1.00</b></div>
+        <div>Забрать<b id="miCash">0</b></div>
+      </div>
+      <div class="controls">
+        <div><label>Ставка</label><input type="number" id="miBet" min="1" value="10"></div>
+        <div><label>Мин на поле: <b id="miCountLbl">3</b></label><input type="range" id="miCount" min="1" max="24" value="3"></div>
+        <button class="primary" id="miStart">Начать</button>
+        <button id="miCashout" disabled>Забрать выигрыш</button>
+      </div>
+      <div class="msg" id="miMsg"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    🔞 Только для лиц старше 18 лет. Демо на виртуальных фишках: их нельзя купить, продать или вывести.
+    Результаты считаются криптографическим генератором случайных чисел браузера (crypto.getRandomValues).
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const fmt = n => Math.floor(n).toLocaleString("ru-RU");
+
+/* ---------- RNG: crypto, без смещения ---------- */
+function randInt(n){ // 0..n-1
+  const max = Math.floor(0x100000000 / n) * n, buf = new Uint32Array(1);
+  do crypto.getRandomValues(buf); while (buf[0] >= max);
+  return buf[0] % n;
+}
+
+/* ---------- Состояние ---------- */
+const START = 1000, KEY = "goldenchip.v1";
+let S = {balance: START, bets: 0, wager: 0, best: 0, lastBonus: 0, age: false};
+try { Object.assign(S, JSON.parse(localStorage.getItem(KEY)) || {}); } catch(e){}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} render(); }
+function render(){
+  $("balance").textContent = fmt(S.balance);
+  $("stBets").textContent = fmt(S.bets); $("stWager").textContent = fmt(S.wager); $("stBest").textContent = fmt(S.best);
+}
+function toast(t){ const el = $("toast"); el.textContent = t; el.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(()=>el.classList.remove("on"), 2200); }
+
+/* Снять ставку. Возвращает true, если хватает фишек */
+function take(amount){
+  amount = Math.floor(amount);
+  if (!(amount >= 1)) { toast("Минимальная ставка — 1 фишка"); return false; }
+  if (amount > S.balance) { toast("Недостаточно фишек. Нажмите «+ Бонус»"); return false; }
+  S.balance -= amount; S.bets++; S.wager += amount; save(); return true;
+}
+function pay(amount, bet){
+  amount = Math.floor(amount);
+  S.balance += amount;
+  if (bet !== undefined && amount - bet > S.best) S.best = amount - bet;
+  save();
+}
+function readBet(id){ return Math.floor(Number($(id).value)); }
+function setMsg(id, text, cls){ const el = $(id); el.textContent = text; el.className = "msg " + (cls || ""); }
+
+/* ---------- Навигация ---------- */
+function show(g){
+  document.querySelectorAll(".game").forEach(s => s.classList.toggle("on", s.id === "g-" + g));
+  document.querySelectorAll("#nav button").forEach(b => b.classList.toggle("on", b.dataset.g === g));
+  scrollTo({top: 0, behavior: "smooth"});
+}
+document.querySelectorAll("[data-g]").forEach(b => b.addEventListener("click", () => show(b.dataset.g)));
+document.querySelectorAll("[data-mul]").forEach(b => b.addEventListener("click", () => {
+  const [id, m] = b.dataset.mul.split(":"); const el = $(id);
+  el.value = Math.max(1, Math.floor(Number(el.value) * Number(m))); el.dispatchEvent(new Event("input"));
+}));
+$("bonus").addEventListener("click", () => {
+  if (S.balance >= 100) return toast("Бонус доступен, когда на балансе меньше 100 фишек");
+  const wait = 60000 - (Date.now() - S.lastBonus);
+  if (wait > 0) return toast("Следующий бонус через " + Math.ceil(wait / 1000) + " с");
+  S.balance += 500; S.lastBonus = Date.now(); save(); toast("+500 фишек 🎁");
+});
+$("reset").addEventListener("click", () => {
+  if (!confirm("Сбросить баланс и статистику?")) return;
+  S = {balance: START, bets: 0, wager: 0, best: 0, lastBonus: 0, age: true}; save(); toast("Прогресс сброшен");
+});
+if (!S.age) $("age").hidden = false;
+$("ageOk").addEventListener("click", () => { S.age = true; save(); $("age").hidden = true; });
+
+/* ---------- СЛОТЫ ---------- */
+// [символ, вес, выплата за 3, выплата за 2 одинаковых]; RTP ≈ 96%
+const SYM = [["🍒",30,8,0],["🍋",25,12,0],["🔔",20,20,1],["⭐",12,40,2],["💎",8,80,3],["7️⃣",5,200,5]];
+const WSUM = SYM.reduce((a, s) => a + s[1], 0);
+function pickSym(){ let r = randInt(WSUM); for (const s of SYM){ if ((r -= s[1]) < 0) return s; } }
+function slotPayout(res){
+  const counts = {}; res.forEach(s => counts[s[0]] = (counts[s[0]] || 0) + 1);
+  for (const s of SYM){ if (counts[s[0]] === 3) return s[2]; }
+  for (const s of SYM){ if (counts[s[0]] === 2) return s[3]; }
+  return 0;
+}
+$("payTable").innerHTML = SYM.slice().reverse().map(s => `<div>${s[0]}${s[0]}${s[0]} ×${s[2]}${s[3] ? `<br><span class="muted">два ×${s[3]}</span>` : ""}</div>`).join("");
+$("slSpin").addEventListener("click", async () => {
+  const bet = readBet("slBet"); if (!take(bet)) return;
+  const btn = $("slSpin"); btn.disabled = true; setMsg("slMsg", "");
+  const reels = [...document.querySelectorAll(".reel")];
+  const res = [pickSym(), pickSym(), pickSym()];
+  reels.forEach(r => r.classList.add("spin"));
+  const iv = setInterval(() => reels.forEach(r => { if (r.classList.contains("spin")) r.textContent = SYM[randInt(SYM.length)][0]; }), 70);
+  for (let i = 0; i < 3; i++){ await sleep(500 + i * 350); reels[i].classList.remove("spin"); reels[i].textContent = res[i][0]; }
+  clearInterval(iv);
+  const m = slotPayout(res);
+  if (m === 1){ pay(bet, bet); setMsg("slMsg", "Пара — ставка возвращена"); }
+  else if (m > 1){ pay(bet * m, bet); setMsg("slMsg", `Выигрыш ×${m}: +${fmt(bet * m - bet)} 🎉`, "win"); }
+  else setMsg("slMsg", "Не повезло, попробуйте ещё", "lose");
+  btn.disabled = false;
+});
+
+/* ---------- РУЛЕТКА (европейская) ---------- */
+const REDS = new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
+const colorOf = n => n === 0 ? "green" : REDS.has(n) ? "red" : "black";
+// тип ставки -> [выплата (включая ставку), проверка]
+const RBETS = {
+  red:["Красное",2,n=>REDS.has(n)], black:["Чёрное",2,n=>n>0&&!REDS.has(n)],
+  even:["Чёт",2,n=>n>0&&n%2===0], odd:["Нечет",2,n=>n%2===1],
+  low:["1–18",2,n=>n>=1&&n<=18], high:["19–36",2,n=>n>=19],
+  d1:["1–12",3,n=>n>=1&&n<=12], d2:["13–24",3,n=>n>=13&&n<=24], d3:["25–36",3,n=>n>=25],
+  c1:["2:1",3,n=>n>0&&n%3===1], c2:["2:1",3,n=>n>0&&n%3===2], c3:["2:1",3,n=>n>0&&n%3===0],
+};
+for (let i = 0; i <= 36; i++) RBETS["n" + i] = [String(i), 36, n => n === i];
+let ruBets = {}, ruBusy = false;
+function cell(key, cls, label, pos){ return `<button class="rc ${cls}" data-bet="${key}"${pos ? ` style="grid-area:${pos}"` : ""}>${label}</button>`; }
+(function buildRoulette(){
+  let h = cell("n0", "g", "0", "1 / 1 / 4 / 2");
+  for (let row = 0; row < 3; row++){
+    for (let col = 0; col < 12; col++){ const n = col * 3 + (3 - row); h += cell("n" + n, REDS.has(n) ? "r" : "b", n, `${row + 1} / ${col + 2}`); }
+    // колонка: верхний ряд (3,6,…) = c3
+    h += cell("c" + (3 - row), "o", "2:1", `${row + 1} / 14`);
+  }
+  $("rgrid").innerHTML = h;
+  $("outs").innerHTML = cell("d1","o","1–12") + cell("d2","o","13–24") + cell("d3","o","25–36");
+  $("outs2").innerHTML = cell("low","o","1–18") + cell("even","o","Чёт") + cell("red","o r","◆") + cell("black","o b","◆") + cell("odd","o","Нечет") + cell("high","o","19–36");
+  // красный/чёрный ромбы должны быть цветными
+  document.querySelector('[data-bet="red"]').style.background = "var(--red)";
+  document.querySelector('[data-bet="black"]').style.background = "var(--black)";
+})();
+function ruRender(){
+  document.querySelectorAll("[data-bet]").forEach(el => {
+    const old = el.querySelector(".chip"); if (old) old.remove();
+    const v = ruBets[el.dataset.bet]; if (v) el.insertAdjacentHTML("beforeend", `<span class="chip">${v >= 1000 ? Math.floor(v/1000) + "k" : v}</span>`);
+  });
+  $("ruTotal").textContent = fmt(Object.values(ruBets).reduce((a, b) => a + b, 0));
+}
+document.querySelectorAll("[data-bet]").forEach(el => el.addEventListener("click", () => {
+  if (ruBusy) return;
+  const chip = readBet("ruChip"); if (!(chip >= 1)) return toast("Укажите размер фишки");
+  const total = Object.values(ruBets).reduce((a, b) => a + b, 0);
+  if (total + chip > S.balance) return toast("Недостаточно фишек");
+  ruBets[el.dataset.bet] = (ruBets[el.dataset.bet] || 0) + chip; ruRender();
+}));
+$("ruClear").addEventListener("click", () => { if (!ruBusy){ ruBets = {}; ruRender(); } });
+$("ruSpin").addEventListener("click", async () => {
+  const total = Object.values(ruBets).reduce((a, b) => a + b, 0);
+  if (!total) return toast("Сначала сделайте ставку");
+  if (!take(total)) return;
+  ruBusy = true; $("ruSpin").disabled = $("ruClear").disabled = true; setMsg("ruMsg", "Шарик крутится…");
+  const n = randInt(37), w = $("wheel");
+  for (let i = 0; i < 22; i++){ const t = randInt(37); w.textContent = t; w.className = "wheel " + colorOf(t); await sleep(30 + i * i * 0.35); }
+  w.textContent = n; w.className = "wheel " + colorOf(n);
+  let won = 0;
+  for (const [k, v] of Object.entries(ruBets)) if (RBETS[k][2](n)) won += v * RBETS[k][1];
+  const names = {red: "красное", black: "чёрное", green: "зеро"};
+  if (won > 0){ pay(won, total); setMsg("ruMsg", `Выпало ${n} (${names[colorOf(n)]}). Выигрыш: +${fmt(won)} 🎉`, "win"); }
+  else setMsg("ruMsg", `Выпало ${n} (${names[colorOf(n)]}). Ставки проиграли`, "lose");
+  $("ruHist").insertAdjacentHTML("afterbegin", `<span style="background:var(--${colorOf(n) === "black" ? "black" : colorOf(n)})">${n}</span>`);
+  while ($("ruHist").children.length > 15) $("ruHist").lastChild.remove();
+  ruBusy = false; $("ruSpin").disabled = $("ruClear").disabled = false;
+  // оставляем ставки на столе для повтора, если хватает фишек
+  if (total > S.balance){ ruBets = {}; }
+  ruRender();
+});
+
+/* ---------- БЛЭКДЖЕК ---------- */
+const SUITS = ["♠","♥","♦","♣"], RANKS = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
+let shoe = [], bj = null;
+function newShoe(){ shoe = []; for (let d = 0; d < 6; d++) for (const s of SUITS) for (const r of RANKS) shoe.push({r, s});
+  for (let i = shoe.length - 1; i > 0; i--){ const j = randInt(i + 1); [shoe[i], shoe[j]] = [shoe[j], shoe[i]]; } }
+function draw(){ if (shoe.length < 52) newShoe(); return shoe.pop(); }
+function score(hand){
+  let t = 0, aces = 0;
+  for (const c of hand){ if (c.r === "A"){ t += 11; aces++; } else t += "JQK".includes(c.r) ? 10 : Number(c.r); }
+  while (t > 21 && aces){ t -= 10; aces--; }
+  return t;
+}
+const isBJ = h => h.length === 2 && score(h) === 21;
+function cardHTML(c, hidden){
+  if (hidden) return `<div class="pc back"></div>`;
+  const red = c.s === "♥" || c.s === "♦";
+  return `<div class="pc ${red ? "red" : ""}"><div>${c.r}</div><div class="c">${c.s}</div><div style="text-align:right">${c.r}</div></div>`;
+}
+function bjRender(reveal){
+  $("bjDealer").innerHTML = bj.dealer.map((c, i) => cardHTML(c, i === 1 && !reveal)).join("");
+  $("bjPlayer").innerHTML = bj.player.map(c => cardHTML(c)).join("");
+  $("bjPs").textContent = "— " + score(bj.player);
+  $("bjDs").textContent = reveal ? "— " + score(bj.dealer) : "";
+}
+function bjButtons(active){
+  $("bjHit").disabled = $("bjStand").disabled = !active;
+  $("bjDouble").disabled = !active || bj.player.length !== 2 || bj.bet > S.balance;
+  $("bjDeal").disabled = active; $("bjBet").disabled = active;
+}
+async function bjFinish(){
+  bjButtons(false); $("bjDeal").disabled = true;
+  bjRender(true);
+  const ps = score(bj.player);
+  if (ps <= 21){ while (score(bj.dealer) < 17){ await sleep(450); bj.dealer.push(draw()); bjRender(true); } }
+  const ds = score(bj.dealer);
+  let ret = 0, text;
+  if (ps > 21) text = "Перебор! Вы проиграли";
+  else if (ds > 21){ ret = bj.bet * 2; text = "У дилера перебор — вы выиграли!"; }
+  else if (ps > ds){ ret = bj.bet * 2; text = `${ps} против ${ds} — вы выиграли!`; }
+  else if (ps === ds){ ret = bj.bet; text = "Ничья, ставка возвращена"; }
+  else text = `${ps} против ${ds} — дилер выиграл`;
+  if (ret) pay(ret, bj.bet);
+  setMsg("bjMsg", text + (ret > bj.bet ? ` +${fmt(ret - bj.bet)}` : ""), ret > bj.bet ? "win" : ret ? "" : "lose");
+  bj.done = true; $("bjDeal").disabled = false; $("bjBet").disabled = false;
+}
+$("bjDeal").addEventListener("click", () => {
+  const bet = readBet("bjBet"); if (!take(bet)) return;
+  bj = {bet, player: [draw()], dealer: [draw()], done: false};
+  bj.player.push(draw()); bj.dealer.push(draw());
+  setMsg("bjMsg", "");
+  if (isBJ(bj.player) || isBJ(bj.dealer)){
+    bjRender(true); bjButtons(false);
+    let ret = 0, text;
+    if (isBJ(bj.player) && isBJ(bj.dealer)){ ret = bet; text = "У обоих блэкджек — ничья"; }
+    else if (isBJ(bj.player)){ ret = Math.floor(bet * 2.5); text = `Блэкджек! +${fmt(ret - bet)} 🎉`; }
+    else text = "У дилера блэкджек";
+    if (ret) pay(ret, bet);
+    setMsg("bjMsg", text, ret > bet ? "win" : ret ? "" : "lose");
+    return;
+  }
+  bjRender(false); bjButtons(true);
+});
+$("bjHit").addEventListener("click", () => {
+  bj.player.push(draw()); bjRender(false); bjButtons(true);
+  if (score(bj.player) >= 21) bjFinish();
+});
+$("bjStand").addEventListener("click", bjFinish);
+$("bjDouble").addEventListener("click", () => {
+  if (!take(bj.bet)) return; S.bets--; save(); // это доп. ставка к той же раздаче
+  bj.bet *= 2; bj.player.push(draw()); bjRender(false); bjFinish();
+});
+
+/* ---------- КОСТИ ---------- */
+const EDGE = 0.99;
+function diUpdate(){
+  const t = Number($("diTarget").value), chance = t - 1, mult = Math.floor(EDGE * 100 / chance * 100) / 100;
+  $("diTargetLbl").textContent = t; $("diChance").textContent = chance + "%";
+  $("diMult").textContent = "×" + mult.toFixed(2);
+  $("diPay").textContent = fmt(Math.max(0, readBet("diBet")) * mult);
+  return {t, mult};
+}
+$("diTarget").addEventListener("input", diUpdate); $("diBet").addEventListener("input", diUpdate); diUpdate();
+$("diGo").addEventListener("click", async () => {
+  const bet = readBet("diBet"), {t, mult} = diUpdate(); if (!take(bet)) return;
+  $("diGo").disabled = true;
+  for (let i = 0; i < 10; i++){ $("diRoll").textContent = randInt(100) + 1; await sleep(40); }
+  const roll = randInt(100) + 1; $("diRoll").textContent = roll;
+  if (roll < t){ const w = Math.floor(bet * mult); pay(w, bet); setMsg("diMsg", `${roll} < ${t} — выигрыш +${fmt(w - bet)}`, "win"); $("diRoll").style.color = "var(--win)"; }
+  else { setMsg("diMsg", `${roll} ≥ ${t} — проигрыш`, "lose"); $("diRoll").style.color = "var(--lose)"; }
+  $("diGo").disabled = false;
+});
+
+/* ---------- МИНЫ ---------- */
+let mi = null;
+function miMult(opened, mines){ let m = EDGE; for (let i = 0; i < opened; i++) m *= (25 - i) / (25 - mines - i); return opened ? m : 1; }
+function miRender(){
+  const g = $("mgrid"); g.innerHTML = "";
+  for (let i = 0; i < 25; i++){
+    const b = document.createElement("button"); b.className = "mc";
+    if (mi){
+      const open = mi.open.has(i), end = mi.over;
+      if (open || end){
+        const bomb = mi.mines.has(i);
+        b.textContent = bomb ? "💣" : "💎"; b.classList.add(bomb ? "bomb" : "gem");
+        if (!open) b.classList.add("dim");
+      }
+      b.disabled = open || end;
+    } else b.disabled = true;
+    b.addEventListener("click", () => miClick(i)); g.appendChild(b);
+  }
+  const opened = mi ? mi.open.size : 0, m = mi ? miMult(opened, mi.count) : 1;
+  $("miOpen").textContent = opened; $("miMult").textContent = "×" + m.toFixed(2);
+  $("miCash").textContent = mi && !mi.over ? fmt(mi.bet * m) : 0;
+  $("miCashout").disabled = !mi || mi.over || opened === 0;
+  $("miStart").disabled = $("miBet").disabled = $("miCount").disabled = !!(mi && !mi.over);
+}
+function miClick(i){
+  if (!mi || mi.over) return;
+  mi.open.add(i);
+  if (mi.mines.has(i)){ mi.over = true; setMsg("miMsg", "Бум! Мина 💥 Ставка проиграна", "lose"); }
+  else if (mi.open.size === 25 - mi.count){ return miCashout(); }
+  miRender();
+}
+function miCashout(){
+  const w = Math.floor(mi.bet * miMult(mi.open.size, mi.count));
+  mi.over = true; pay(w, mi.bet); setMsg("miMsg", `Вы забрали ${fmt(w)} (+${fmt(w - mi.bet)}) 💰`, "win"); miRender();
+}
+$("miCount").addEventListener("input", () => $("miCountLbl").textContent = $("miCount").value);
+$("miStart").addEventListener("click", () => {
+  const bet = readBet("miBet"), count = Number($("miCount").value); if (!take(bet)) return;
+  const mines = new Set(); while (mines.size < count) mines.add(randInt(25));
+  mi = {bet, count, mines, open: new Set(), over: false};
+  setMsg("miMsg", "Открывайте клетки. Забирайте выигрыш, пока не попали на мину"); miRender();
+});
+$("miCashout").addEventListener("click", miCashout);
+miRender();
+
+render();
+</script>
+</body>
+</html>
